@@ -62,6 +62,19 @@ public class ResistorChain implements Comparable<ResistorChain>{
         setIst(actual);
     }
 
+    public void calcResistanceDeviation(double[] best){
+        if(best.length == widerstaende.length){
+            double dev = 0;
+            for(int i = 0; i < widerstaende.length; i++){
+                dev += Math.pow(Math.abs((widerstaende[i]-best[i])/best[i]),2);
+            }
+            dev = Math.sqrt(dev);
+            deviation = dev;
+        }else{
+            deviation = 99999;
+        }
+    }
+
     @Override
     public String toString(){
         StringBuilder ret = new StringBuilder();

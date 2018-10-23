@@ -114,5 +114,21 @@ public class Berechner{
         return voltOut;
     }
 
-
+    public static ArrayList<ResistorChain> getBestRatioChain(double[] range, double ratio, int group){
+        ArrayList<ResistorChain> list = new ArrayList<>();
+        if(range.length == 1){
+            list.add(Calc.getChainFromRatio(ratio,range[0],group));
+        }else if(range.length == 2) {
+            double[] sRange = range;
+            Arrays.sort(sRange);
+            for (double i = sRange[0]; i <= sRange[1]; i += ((sRange[1] - sRange[0]) / 1000)) {
+                ResistorChain chain = Calc.getChainFromRatio(ratio, i, group);
+                if (!list.contains(chain)) {
+                    list.add(chain);
+                }
+            }
+        }
+        Collections.sort(list);
+        return new ArrayList<>(list.subList(0, Math.min(10,list.size())));
+    }
 }

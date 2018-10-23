@@ -32,10 +32,20 @@ public class Controller implements ChangeListener<ResistorChain>{
     @FXML ListView<String> listDeviation;
     @FXML ChoiceBox<String> choiceGroup;
     @FXML TextField current;
+
+    @FXML TextField ratio;
+    @FXML TextField resistance;
+    @FXML ChoiceBox<String> choiceGroup2;
+    @FXML Button calculate;
+    @FXML ListView<ResistorChain> listAmplifierChain;
+
     @FXML
     public void initialize(){
         choiceGroup.setItems(FXCollections.observableArrayList("e3","e6","e12","e24","e48","e96","e192"));
         choiceGroup.setValue("e48");
+
+        choiceGroup2.setItems(FXCollections.observableArrayList("e3","e6","e12","e24","e48","e96","e192"));
+        choiceGroup2.setValue("e48");
 
         outputVoltages.setTooltip(new Tooltip("desired output voltages"));
         inputVoltage.setTooltip(new Tooltip("input voltage"));
@@ -79,6 +89,25 @@ public class Controller implements ChangeListener<ResistorChain>{
         }
     }
 
+    public void OnConfirmRatioCalculate(){
+        if(checkSyntax2()){
+            double ratioo = parseInputString(ratio.getText(),1)[0];
+            double[] resistBorder = parseInputString(resistance.getText(),2);
+
+            if(!listAmplifierChain.getSelectionModel().isEmpty()){
+                listAmplifierChain.getSelectionModel().selectedItemProperty().removeListener(this);
+                listAmplifierChain.setItems(FXCollections.observableArrayList());
+                listAmplifierChain.setItems(FXCollections.observableArrayList());
+                listAmplifierChain.getItems().clear();
+            }
+
+            ObservableList<ResistorChain> items = FXCollections.observableArrayList();
+            int group = Integer.parseInt(choiceGroup2.getValue().replaceAll("[^0123456789]",""));
+            items.addAll(Berechner.getBestRatioChain(resistBorder,ratioo,group));
+            listAmplifierChain.setItems(items);
+        }
+    }
+
     private boolean checkSyntax(){
         boolean ret = true;
         if(inputVoltage.getText().trim().equals("")){
@@ -100,6 +129,25 @@ public class Controller implements ChangeListener<ResistorChain>{
             ret = false;
         }else{
             current.setStyle("-fx-background-border-color: default ;");
+        }
+
+        return ret;
+    }
+
+    private boolean checkSyntax2(){
+        boolean ret = true;
+        if(ratio.getText().trim().equals("")){
+            ratio.setStyle("-fx-background-color: #FF4136;");
+            ret = false;
+        }else{
+            ratio.setStyle("-fx-background-border-color: default;");
+        }
+
+        if(resistance.getText().trim().equals("")){
+            resistance.setStyle("-fx-background-color: #FF4136;");
+            ret = false;
+        }else{
+            resistance.setStyle("-fx-background-border-color: default;");
         }
 
         return ret;

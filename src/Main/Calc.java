@@ -180,4 +180,15 @@ public abstract class Calc {
         }
         return best;
     }
+
+    public static ResistorChain getChainFromRatio(double ratio, double totalRes, int group){
+        ResistorChain chain = new ResistorChain();
+        double tempRes = (ratio*totalRes/(ratio+1));
+        double actualRes = getBestResistance(tempRes,group);
+        chain = chain.add(actualRes);
+        tempRes = totalRes - actualRes;
+        chain = chain.add(getBestResistance(tempRes,group));
+        chain.calcResistanceDeviation(new double[]{(ratio*totalRes/(ratio+1)),(totalRes/(ratio+1))});
+        return chain;
+    }
 }
