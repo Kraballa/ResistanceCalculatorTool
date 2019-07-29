@@ -160,7 +160,6 @@ public abstract class Calc {
         }
         double[] row;
         switch(group){
-            case 3: row = e3; break;
             case 6: row = e6; break;
             case 12: row = e12; break;
             case 24: row = e24; break;

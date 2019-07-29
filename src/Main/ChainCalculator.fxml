@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.GridPane?>
-
+<?import java.lang.*?>
 <BorderPane prefHeight="710.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Main.Controller">
   <center>
     <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
@@ -27,7 +22,9 @@
                     </Label>
                     <HBox prefHeight="-1.0" prefWidth="-1.0" rotate="0.0">
                       <children>
-                        <TextField id="voltIn" fx:id="inputVoltage" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" prefWidth="-1.0" text="10" HBox.hgrow="ALWAYS">
+                          <TextField id="voltIn" fx:id="inputVoltage" maxWidth="1.7976931348623157E308" minHeight="32.0"
+                                     prefHeight="32.0" prefWidth="-1.0" promptText="input voltage" text="10"
+                                     HBox.hgrow="ALWAYS">
                           <HBox.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" fx:id="x1" />
                           </HBox.margin>
@@ -41,7 +38,8 @@
                             </FXCollections>
                           </items>
                         </ChoiceBox>
-                        <TextField fx:id="current" minHeight="32.0" prefHeight="32.0" prefWidth="-1.0" text="0.001 0.002">
+                          <TextField fx:id="current" minHeight="32.0" prefHeight="32.0" prefWidth="-1.0"
+                                     promptText="ampere range" text="0.001 0.002">
                           <HBox.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" fx:id="x1" />
                           </HBox.margin>
@@ -59,7 +57,9 @@
                     </Label>
                     <HBox prefHeight="-1.0" prefWidth="-1.0" rotate="0.0">
                       <children>
-                        <TextField fx:id="outputVoltages" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" prefWidth="335.0" text="8 4 2" HBox.hgrow="ALWAYS">
+                          <TextField fx:id="outputVoltages" maxWidth="1.7976931348623157E308" minHeight="32.0"
+                                     prefHeight="32.0" prefWidth="335.0" promptText="desired output voltage"
+                                     text="8 4 2" HBox.hgrow="ALWAYS">
                           <HBox.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" fx:id="x1" />
                           </HBox.margin>
