@@ -204,8 +204,8 @@ public class Controller implements ChangeListener<ResistorChain>{
     private void setListDeviation(ResistorChain chain){
         ObservableList<String> comparisons = FXCollections.observableArrayList();
         double totalRes = 0;
-        for(int i = 0; i < chain.widerstaende.length; i++){
-            totalRes += chain.widerstaende[i];
+        for (int i = 0; i < chain.resistances.length; i++) {
+            totalRes += chain.resistances[i];
         }
         int optimalRes = (int)Math.round(berechner.getVoltIn() / chain.getCurrent());
         comparisons.add("total resistor desired: " + optimalRes + "Ω");

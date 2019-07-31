@@ -10,7 +10,7 @@ package Main;
 
 public class ResistorChain implements Comparable<ResistorChain>{
 
-    public final double widerstaende[];
+    public final double resistances[];
     private double deviation = 99999;
 
     private double[] ist;
@@ -21,16 +21,16 @@ public class ResistorChain implements Comparable<ResistorChain>{
         this(new double[]{});
     }
 
-    public ResistorChain(double[] widerstaende){
-        this.widerstaende = widerstaende;
+    public ResistorChain(double[] resistances) {
+        this.resistances = resistances;
     }
 
     public ResistorChain add(double resistance){
-        double[] widerstNew = new double[widerstaende.length+1];
-        for(int i = 0; i < widerstaende.length; i++){
-            widerstNew[i] = widerstaende[i];
+        double[] widerstNew = new double[resistances.length + 1];
+        for (int i = 0; i < resistances.length; i++) {
+            widerstNew[i] = resistances[i];
         }
-        widerstNew[widerstaende.length] = resistance;
+        widerstNew[resistances.length] = resistance;
         ResistorChain ret = new ResistorChain(widerstNew);
         ret.setIst(this.getIst());
         if(getBerechner()!=null){
@@ -41,7 +41,7 @@ public class ResistorChain implements Comparable<ResistorChain>{
 
     public void calcGlobalDeviation(){
         double[] soll = getBerechner().getVoltOut();
-        if(widerstaende.length != soll.length + 1){
+        if (resistances.length != soll.length + 1) {
             return;
         }
         double dev = 0;
@@ -57,16 +57,16 @@ public class ResistorChain implements Comparable<ResistorChain>{
     public void calcIndividualDeviation(double voltIn, double[] voltOut){
         double[] actual = new double[voltOut.length];
         for(int i = 0; i < voltOut.length; i++){
-            actual[i] = Calc.getAbsoluteOutput(Calc.sumupTo(widerstaende,i), Calc.sumupFrom(widerstaende,i+1),voltIn);
+            actual[i] = Calc.getAbsoluteOutput(Calc.sumupTo(resistances, i), Calc.sumupFrom(resistances, i + 1), voltIn);
         }
         setIst(actual);
     }
 
     public void calcResistanceDeviation(double[] best){
-        if(best.length == widerstaende.length){
+        if (best.length == resistances.length) {
             double dev = 0;
-            for(int i = 0; i < widerstaende.length; i++){
-                dev += Math.pow(Math.abs((widerstaende[i]-best[i])/best[i]),2);
+            for (int i = 0; i < resistances.length; i++) {
+                dev += Math.pow(Math.abs((resistances[i] - best[i]) / best[i]), 2);
             }
             dev = Math.sqrt(dev);
             deviation = dev;
@@ -78,8 +78,8 @@ public class ResistorChain implements Comparable<ResistorChain>{
     @Override
     public String toString(){
         StringBuilder ret = new StringBuilder();
-        for (int i = 0; i < widerstaende.length; i++){
-            ret.append(Calc.roundWithComma(widerstaende[i], 3)).append("Ω  ");
+        for (int i = 0; i < resistances.length; i++) {
+            ret.append(Calc.roundWithComma(resistances[i], 3)).append("Ω  ");
         }
         ret.append("= ").append(Calc.roundWithComma(deviation, 5));
         return ret.toString();
@@ -125,9 +125,9 @@ public class ResistorChain implements Comparable<ResistorChain>{
     public boolean equals(Object o){
         if(o instanceof ResistorChain){
             ResistorChain kette = (ResistorChain) o;
-            if(this.widerstaende.length == kette.widerstaende.length){
-                for(int i = 0; i < widerstaende.length; i++){
-                    if(widerstaende[i] != kette.widerstaende[i]){
+            if (this.resistances.length == kette.resistances.length) {
+                for (int i = 0; i < resistances.length; i++) {
+                    if (resistances[i] != kette.resistances[i]) {
                         return false;
                     }
                 }

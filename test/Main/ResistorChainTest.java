@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResistorChainTest {
 
@@ -23,9 +23,9 @@ class ResistorChainTest {
     @Test
     void add() {
         chain.add(1.0);
-        assertEquals(0,chain.widerstaende.length);
+        assertEquals(0, chain.resistances.length);
         chain = chain.add(1.0);
-        assertEquals(1.0,chain.widerstaende[0],0.00001);
+        assertEquals(1.0, chain.resistances[0], 0.00001);
     }
 
     @Test

@@ -87,52 +87,6 @@ public abstract class Calc {
         return Uout;
     }
 
-
-    @Deprecated
-    public static double getBestResistance2(double optimum, int group){
-        //check if input group is valid
-        int[] allowed = {3,6,12,24,48,96,192};
-        boolean valid = false;
-        for (int anAllowed : allowed) {
-            if (anAllowed == group) {
-                valid = true;
-            }
-        }
-        if(!valid){
-            return 0D;
-        }
-
-        //calculate the decade and limit the resistance to [1.0,100000)
-        int decade = 1;
-        while(decade < 10000 && optimum / decade >= 10){
-            decade *= 10;
-        }
-
-        double[] row = new double[group];
-        for(int i = 0; i < row.length; i++){
-            row[i] = Math.pow(Math.pow(10D,i),1D/group);
-            switch(group){
-                case 3: case 6: case 12: case 24:
-                    row[i] = Math.round(10.0 * row[i]) / 10.0;
-                    break;
-
-                default:
-                    row[i] = Math.round(100.0 * row[i]) / 100.0;
-                    break;
-            }
-            row[i] *= decade;
-        }
-
-        double best = row[0];
-        for (double aRow : row) {
-            if (Math.abs(optimum - best) > Math.abs(optimum - aRow)) {
-                best = aRow;
-            }
-        }
-
-        return best;
-    }
-
     /**
      * From a given optimum resistance, calculates the closest value from a pool of values. This is used to ensure the resistances
      * exist in real life.
