@@ -39,8 +39,8 @@ public class Controller implements ChangeListener<ResistorChain>{
     @FXML Button calculate;
     @FXML ListView<ResistorChain> listAmplifierChain;
 
-    private String wrongInputStyle = "-fx-background-color: #FF4136;";
-    private String correctInputStyle = "-fx-background-border-color: default;";
+    private String warningStyle = "-fx-background-color: #FF4136;";
+    private String defaultStyle = "";
 
     @FXML
     public void initialize(){
@@ -58,107 +58,108 @@ public class Controller implements ChangeListener<ResistorChain>{
     }
 
     public void OnConfirmCalculate(){
-        if(checkSyntax()){
-            double voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
-            System.out.println("voltin successfully parsed");
-            double[] voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
-            System.out.println("voltout successfully parsed");
-            double[] ampere = InputCheck.parseAmpere(current.getText());
-            System.out.println("ampere successfully parsed");
-
-            if (!(InputCheck.checkAmpere(ampere) && InputCheck.checkVoltOut(voltOut) && InputCheck.checkVoltIn(voltIn, voltOut))) {
-                return;
-            }
-
-            if (!listChains.getSelectionModel().isEmpty()) {
-                listChains.getSelectionModel().selectedItemProperty().removeListener(this);
-                listChains.setItems(FXCollections.observableArrayList());
-                listDeviation.setItems(FXCollections.observableArrayList());
-                listChains.getItems().clear();
-            }
-            berechner = new Berechner(voltIn, voltOut, ampere);
-            berechner.setResistorGroup(Integer.parseInt(choiceGroup.getValue().replaceAll("[^0123456789]", "")));
-            ObservableList<ResistorChain> items = FXCollections.observableArrayList();
-
-            if (ampere.length == 1) {
-                items.add(berechner.calculateChain(ampere[0]));
-            } else {
-                items.addAll(berechner.calculateChains());
-                items = Calc.removeDuplicates(items);
-            }
-            listChains.setItems(items);
-            listChains.getSelectionModel().selectFirst();
-            setListDeviation(listChains.getSelectionModel().getSelectedItem());
-            listChains.getSelectionModel().selectedItemProperty().addListener(this);
+        if (!inputExists()) {
+            return;
         }
+
+        //parse input
+        double voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
+        double[] voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
+        double[] ampere = InputCheck.parseAmpere(current.getText());
+
+        if (!(InputCheck.checkAmpere(ampere) && InputCheck.checkVoltOut(voltOut) && InputCheck.checkVoltIn(voltIn, voltOut))) {
+            return;
+        }
+
+        if (!listChains.getSelectionModel().isEmpty()) {
+            listChains.getSelectionModel().selectedItemProperty().removeListener(this);
+            listChains.setItems(FXCollections.observableArrayList());
+            listDeviation.setItems(FXCollections.observableArrayList());
+            listChains.getItems().clear();
+        }
+        berechner = new Berechner(voltIn, voltOut, ampere);
+        berechner.setResistorGroup(InputCheck.parseESeries(choiceGroup.getValue()));
+        ObservableList<ResistorChain> items = FXCollections.observableArrayList();
+
+        if (ampere.length == 1) {
+            items.add(berechner.calculateChain(ampere[0]));
+        } else {
+            items.addAll(berechner.calculateChains());
+            items = Calc.removeDuplicates(items);
+        }
+
+        listChains.setItems(items);
+        listChains.getSelectionModel().selectFirst();
+        setListDeviation(listChains.getSelectionModel().getSelectedItem());
+        listChains.getSelectionModel().selectedItemProperty().addListener(this);
     }
 
     public void OnConfirmRatioCalculate(){
-        if(checkSyntax2()){
-            double ratioo = InputCheck.parseInputString(ratio.getText(), 1)[0];
-            double[] resistBorder = InputCheck.parseInputString(resistance.getText(), 2);
-
-            if(!listAmplifierChain.getSelectionModel().isEmpty()){
-                listAmplifierChain.getSelectionModel().selectedItemProperty().removeListener(this);
-                listAmplifierChain.setItems(FXCollections.observableArrayList());
-                listAmplifierChain.setItems(FXCollections.observableArrayList());
-                listAmplifierChain.getItems().clear();
-            }
-
-            ObservableList<ResistorChain> items = FXCollections.observableArrayList();
-            int group = Integer.parseInt(choiceGroup2.getValue().replaceAll("[^0123456789]",""));
-            items.addAll(Berechner.getBestRatioChain(resistBorder,ratioo,group));
-            listAmplifierChain.setItems(items);
+        if (!inputExists2()) {
+            return;
         }
+
+        double ratioo = InputCheck.parseInputString(ratio.getText(), 1)[0];
+        double[] resistBorder = InputCheck.parseInputString(resistance.getText(), 2);
+
+        if (!listAmplifierChain.getSelectionModel().isEmpty()) {
+            listAmplifierChain.getSelectionModel().selectedItemProperty().removeListener(this);
+            listAmplifierChain.setItems(FXCollections.observableArrayList());
+            listAmplifierChain.setItems(FXCollections.observableArrayList());
+            listAmplifierChain.getItems().clear();
+        }
+
+        ObservableList<ResistorChain> items = FXCollections.observableArrayList();
+        int group = Integer.parseInt(choiceGroup2.getValue().replaceAll("[^0123456789]", ""));
+        items.addAll(Berechner.getBestRatioChain(resistBorder, ratioo, group));
+        listAmplifierChain.setItems(items);
     }
 
-    private boolean checkSyntax(){
+    private boolean inputExists() {
         boolean ret = true;
 
         if(inputVoltage.getText().trim().equals("")){
-            inputVoltage.setStyle(wrongInputStyle);
+            inputVoltage.setStyle(warningStyle);
             ret = false;
         }else{
-            inputVoltage.setStyle(correctInputStyle);
+            inputVoltage.setStyle(defaultStyle);
         }
 
         if(outputVoltages.getText().trim().equals("")){
-            outputVoltages.setStyle(wrongInputStyle);
+            outputVoltages.setStyle(warningStyle);
             ret = false;
         }else{
-            outputVoltages.setStyle(correctInputStyle);
+            outputVoltages.setStyle(defaultStyle);
         }
 
         if(current.getText().trim().equals("")){
-            current.setStyle(wrongInputStyle);
+            current.setStyle(warningStyle);
             ret = false;
         }else{
-            current.setStyle(correctInputStyle);
+            current.setStyle(defaultStyle);
         }
 
         return ret;
     }
 
-    private boolean checkSyntax2(){
+    private boolean inputExists2() {
         boolean ret = true;
         if(ratio.getText().trim().equals("")){
-            ratio.setStyle(wrongInputStyle);
+            ratio.setStyle(warningStyle);
             ret = false;
         }else{
-            ratio.setStyle(correctInputStyle);
+            ratio.setStyle(defaultStyle);
         }
 
         if(resistance.getText().trim().equals("")){
-            resistance.setStyle(wrongInputStyle);
+            resistance.setStyle(warningStyle);
             ret = false;
         }else{
-            resistance.setStyle(correctInputStyle);
+            resistance.setStyle(defaultStyle);
         }
 
         return ret;
     }
-
-
 
     private void setListDeviation(ResistorChain chain){
         ObservableList<String> comparisons = FXCollections.observableArrayList();
@@ -179,12 +180,12 @@ public class Controller implements ChangeListener<ResistorChain>{
         comparisons.add("");
         if(chain.getDeviation() >= 0.5){
             comparisons.add("Warning! extreme deviation");
-            listDeviation.setStyle("-fx-control-inner-background: #ff7777;");
+            listDeviation.setStyle(warningStyle);
         }else if(chain.getDeviation() >= 0.08){
             comparisons.add("suboptimal deviation");
             listDeviation.setStyle("-fx-control-inner-background: #ffd6d6;");
         }else{
-            listDeviation.setStyle("-fx-control-inner-background: #ffffff;");
+            listDeviation.setStyle(defaultStyle);
         }
 
         comparisons.add("deviation coefficient: " + chain.getDeviation());

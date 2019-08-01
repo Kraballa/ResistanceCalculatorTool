@@ -49,6 +49,10 @@ public abstract class InputCheck {
         return parseInputString(ampere, 2);
     }
 
+    public static int parseESeries(String input) {
+        return Integer.parseInt(input.replaceAll("[^0123456789]", ""));
+    }
+
     public static double[] parseInputString(String string, int length) {
         int actualLength = length;
         String[] split = string.trim().split("[ ]+");
