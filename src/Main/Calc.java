@@ -8,6 +8,9 @@ package Main;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public abstract class Calc {
 
     public static double[] e3 = new double[]{1,2.2,4.7};
@@ -143,5 +146,20 @@ public abstract class Calc {
         chain = chain.add(getBestResistance(tempRes,group));
         chain.calcResistanceDeviation(new double[]{(ratio*totalRes/(ratio+1)),(totalRes/(ratio+1))});
         return chain;
+    }
+
+    public static ObservableList<ResistorChain> removeDuplicates(ObservableList<ResistorChain> chainList) {
+        ObservableList<ResistorChain> uniqueList = FXCollections.observableArrayList();
+
+        uniqueList.add(chainList.get(0));
+        if (chainList.size() > 1) {
+            for (int i = 1; i < chainList.size(); i++) {
+                if (!uniqueList.contains(chainList.get(i))) {
+                    uniqueList.add(chainList.get(i));
+                }
+            }
+        }
+
+        return uniqueList;
     }
 }

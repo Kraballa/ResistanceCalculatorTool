@@ -39,6 +39,9 @@ public class Controller implements ChangeListener<ResistorChain>{
     @FXML Button calculate;
     @FXML ListView<ResistorChain> listAmplifierChain;
 
+    private String wrongInputStyle = "-fx-background-color: #FF4136;";
+    private String correctInputStyle = "-fx-background-border-color: default;";
+
     @FXML
     public void initialize(){
         choiceGroup.setItems(FXCollections.observableArrayList("e3","e6","e12","e24","e48","e96","e192"));
@@ -56,43 +59,44 @@ public class Controller implements ChangeListener<ResistorChain>{
 
     public void OnConfirmCalculate(){
         if(checkSyntax()){
-            double voltIn = parseInputString(inputVoltage.getText(),1)[0];
+            double voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
             System.out.println("voltin successfully parsed");
-            double[] voltOut = parseInputString(outputVoltages.getText(),0);
+            double[] voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
             System.out.println("voltout successfully parsed");
-            double[] ampere = parseInputString(current.getText(),2);
+            double[] ampere = InputCheck.parseAmpere(current.getText());
             System.out.println("ampere successfully parsed");
 
-            if(checkSemantics(voltIn,voltOut,ampere)){
-                if(!listChains.getSelectionModel().isEmpty()){
-                    listChains.getSelectionModel().selectedItemProperty().removeListener(this);
-                    listChains.setItems(FXCollections.observableArrayList());
-                    listDeviation.setItems(FXCollections.observableArrayList());
-                    listChains.getItems().clear();
-                }
-                berechner = new Berechner(voltIn,voltOut, ampere);
-                berechner.setResistorGroup(Integer.parseInt(choiceGroup.getValue().replaceAll("[^0123456789]","")));
-                ObservableList<ResistorChain> items = FXCollections.observableArrayList();
-
-                if(ampere.length == 1){
-                    items.add(berechner.calculateChain(ampere[0]));
-                }else{
-                    items.addAll(berechner.calculateChains());
-                    items = removeDuplicates(items);
-                }
-                listChains.setItems(items);
-                listChains.getSelectionModel().selectFirst();
-                setListDeviation(listChains.getSelectionModel().getSelectedItem());
-                listChains.getSelectionModel().selectedItemProperty().addListener(this);
-
+            if (!(InputCheck.checkAmpere(ampere) && InputCheck.checkVoltOut(voltOut) && InputCheck.checkVoltIn(voltIn, voltOut))) {
+                return;
             }
+
+            if (!listChains.getSelectionModel().isEmpty()) {
+                listChains.getSelectionModel().selectedItemProperty().removeListener(this);
+                listChains.setItems(FXCollections.observableArrayList());
+                listDeviation.setItems(FXCollections.observableArrayList());
+                listChains.getItems().clear();
+            }
+            berechner = new Berechner(voltIn, voltOut, ampere);
+            berechner.setResistorGroup(Integer.parseInt(choiceGroup.getValue().replaceAll("[^0123456789]", "")));
+            ObservableList<ResistorChain> items = FXCollections.observableArrayList();
+
+            if (ampere.length == 1) {
+                items.add(berechner.calculateChain(ampere[0]));
+            } else {
+                items.addAll(berechner.calculateChains());
+                items = Calc.removeDuplicates(items);
+            }
+            listChains.setItems(items);
+            listChains.getSelectionModel().selectFirst();
+            setListDeviation(listChains.getSelectionModel().getSelectedItem());
+            listChains.getSelectionModel().selectedItemProperty().addListener(this);
         }
     }
 
     public void OnConfirmRatioCalculate(){
         if(checkSyntax2()){
-            double ratioo = parseInputString(ratio.getText(),1)[0];
-            double[] resistBorder = parseInputString(resistance.getText(),2);
+            double ratioo = InputCheck.parseInputString(ratio.getText(), 1)[0];
+            double[] resistBorder = InputCheck.parseInputString(resistance.getText(), 2);
 
             if(!listAmplifierChain.getSelectionModel().isEmpty()){
                 listAmplifierChain.getSelectionModel().selectedItemProperty().removeListener(this);
@@ -110,25 +114,26 @@ public class Controller implements ChangeListener<ResistorChain>{
 
     private boolean checkSyntax(){
         boolean ret = true;
+
         if(inputVoltage.getText().trim().equals("")){
-            inputVoltage.setStyle("-fx-background-color: #FF4136;");
+            inputVoltage.setStyle(wrongInputStyle);
             ret = false;
         }else{
-            inputVoltage.setStyle("-fx-background-border-color: default;");
+            inputVoltage.setStyle(correctInputStyle);
         }
 
         if(outputVoltages.getText().trim().equals("")){
-            outputVoltages.setStyle("-fx-background-color: #FF4136;");
+            outputVoltages.setStyle(wrongInputStyle);
             ret = false;
         }else{
-            outputVoltages.setStyle("-fx-background-border-color: default;");
+            outputVoltages.setStyle(correctInputStyle);
         }
 
         if(current.getText().trim().equals("")){
-            current.setStyle("-fx-background-color: #FF4136;");
+            current.setStyle(wrongInputStyle);
             ret = false;
         }else{
-            current.setStyle("-fx-background-border-color: default ;");
+            current.setStyle(correctInputStyle);
         }
 
         return ret;
@@ -137,69 +142,23 @@ public class Controller implements ChangeListener<ResistorChain>{
     private boolean checkSyntax2(){
         boolean ret = true;
         if(ratio.getText().trim().equals("")){
-            ratio.setStyle("-fx-background-color: #FF4136;");
+            ratio.setStyle(wrongInputStyle);
             ret = false;
         }else{
-            ratio.setStyle("-fx-background-border-color: default;");
+            ratio.setStyle(correctInputStyle);
         }
 
         if(resistance.getText().trim().equals("")){
-            resistance.setStyle("-fx-background-color: #FF4136;");
+            resistance.setStyle(wrongInputStyle);
             ret = false;
         }else{
-            resistance.setStyle("-fx-background-border-color: default;");
+            resistance.setStyle(correctInputStyle);
         }
 
         return ret;
     }
 
-    private boolean checkSemantics(double voltIn, double[] voltOut, double[] ampere){
-        boolean ret = true;
-        //check voltIn
-        if(voltIn <= 0){
-            System.out.println("voltIn <= 0");
-            ret = false;
-        }else{
-            for (double aVoltOut : voltOut) {
-                if (voltIn < aVoltOut) {
-                    System.out.println("voltIn (" + voltIn + ") is not bigger than atleast one voltOut(" + aVoltOut + ")");
-                    ret = false;
-                }
-            }
-        }
 
-        //check voltOut
-        for (double aVoltOut : voltOut) {
-            if (aVoltOut < 0) {
-                System.out.println("voltOut cannot have values < 0");
-                ret = false;
-            }
-        }
-
-        //check ampere
-        for (double anAmpere : ampere) {
-            if (anAmpere < 0) {
-                System.out.println("ampere cannot have values < 0");
-                ret = false;
-            }
-        }
-        return ret;
-    }
-
-    private ObservableList<ResistorChain> removeDuplicates(ObservableList<ResistorChain> chainList){
-        ObservableList<ResistorChain> uniqueList = FXCollections.observableArrayList();
-
-        uniqueList.add(chainList.get(0));
-        if(chainList.size() > 1){
-            for(int i = 1; i < chainList.size(); i++){
-                if(!uniqueList.contains(chainList.get(i))){
-                    uniqueList.add(chainList.get(i));
-                }
-            }
-        }
-
-        return uniqueList;
-    }
 
     private void setListDeviation(ResistorChain chain){
         ObservableList<String> comparisons = FXCollections.observableArrayList();
@@ -232,18 +191,6 @@ public class Controller implements ChangeListener<ResistorChain>{
         listDeviation.setItems(comparisons);
     }
 
-    private double[] parseInputString(String string, int length){
-        int actualLength = length;
-        String[] split = string.trim().split("[ ]+");
-        double ret[] = new double[split.length];
-        if(length <= 0){
-            actualLength = ret.length;
-        }
-        for(int i = 0; i < Math.min(ret.length,actualLength); i++){
-            ret[i] = Double.parseDouble(split[i].replaceAll(",","."));
-        }
-        return ret;
-    }
 
     public void OnOpenAbout(){
         Parent root;
