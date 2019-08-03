@@ -18,7 +18,7 @@ public abstract class InputCheck {
     }
 
     public static double parseVoltIn(String voltIn) {
-        return parseInputString(voltIn, 1)[0];
+        return parseDoubleArray(voltIn, 1)[0];
     }
 
     public static boolean checkVoltOut(double[] voltOut) {
@@ -32,12 +32,12 @@ public abstract class InputCheck {
     }
 
     public static double[] parseVoltOut(String voltOut) {
-        return parseInputString(voltOut, 0);
+        return parseDoubleArray(voltOut, 0);
     }
 
     public static boolean checkAmpere(double[] ampere) {
         for (double anAmpere : ampere) {
-            if (anAmpere < 0) {
+            if (anAmpere <= 0) {
                 System.out.println("ampere cannot have values < 0");
                 return false;
             }
@@ -46,14 +46,15 @@ public abstract class InputCheck {
     }
 
     public static double[] parseAmpere(String ampere) {
-        return parseInputString(ampere, 2);
+        return parseDoubleArray(ampere, 2);
     }
 
     public static int parseESeries(String input) {
         return Integer.parseInt(input.replaceAll("[^0123456789]", ""));
     }
 
-    public static double[] parseInputString(String string, int length) {
+    public static double[] parseDoubleArray(String string, int length) {
+        string = string.replaceAll("[^0123456789.,]", " ");
         int actualLength = length;
         String[] split = string.trim().split("[ ]+");
         double ret[] = new double[split.length];

@@ -67,9 +67,13 @@ public class Controller implements ChangeListener<ResistorChain>{
         double[] voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
         double[] ampere = InputCheck.parseAmpere(current.getText());
 
+        System.out.println("parsed input");
+
         if (!(InputCheck.checkAmpere(ampere) && InputCheck.checkVoltOut(voltOut) && InputCheck.checkVoltIn(voltIn, voltOut))) {
             return;
         }
+
+        System.out.println("inputs okay");
 
         if (!listChains.getSelectionModel().isEmpty()) {
             listChains.getSelectionModel().selectedItemProperty().removeListener(this);
@@ -88,6 +92,8 @@ public class Controller implements ChangeListener<ResistorChain>{
             items = Calc.removeDuplicates(items);
         }
 
+        System.out.println("calculated res-chains");
+
         listChains.setItems(items);
         listChains.getSelectionModel().selectFirst();
         setListDeviation(listChains.getSelectionModel().getSelectedItem());
@@ -99,8 +105,8 @@ public class Controller implements ChangeListener<ResistorChain>{
             return;
         }
 
-        double ratioo = InputCheck.parseInputString(ratio.getText(), 1)[0];
-        double[] resistBorder = InputCheck.parseInputString(resistance.getText(), 2);
+        double ratioo = InputCheck.parseDoubleArray(ratio.getText(), 1)[0];
+        double[] resistBorder = InputCheck.parseDoubleArray(resistance.getText(), 2);
 
         if (!listAmplifierChain.getSelectionModel().isEmpty()) {
             listAmplifierChain.getSelectionModel().selectedItemProperty().removeListener(this);

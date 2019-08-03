@@ -83,8 +83,7 @@ public class Berechner{
             currentBorder[0] = border[0];
             currentBorder[1] = border[1];
         }else{
-            currentBorder[0] = 0.001;
-            currentBorder[1] = 0.001;
+            setCurrent(0.01);
         }
     }
 
