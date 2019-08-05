@@ -81,14 +81,14 @@
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                             <children>
-                                <ListView id="chainList" fx:id="listChains" orientation="VERTICAL" prefHeight="573.0"
+                                <ListView id="chainList" fx:id="chainList" orientation="VERTICAL" prefHeight="573.0"
                                           prefWidth="707.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
                             <children>
-                                <ListView id="deviationList" fx:id="listDeviation" prefHeight="160.0" prefWidth="173.0"
+                                <ListView id="deviationList" fx:id="detailList" prefHeight="160.0" prefWidth="173.0"
                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </children>

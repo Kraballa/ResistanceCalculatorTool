@@ -4,23 +4,28 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
 
 public class ResChainListPanel extends SplitPane implements ChangeListener<ResistorChain> {
 
-    ListView<ResistorChain> LeftPanel;
-    TextArea RightPanel;
+    private ListView<ResistorChain> LeftPanel;
+    private ListView<String> RightPanel;
+    private ResCalculator resCalculator;
 
-    @FXML
-    protected void initialize() {
-        this.getChildren().add(new AnchorPane(LeftPanel = new ListView<ResistorChain>()));
-        this.getChildren().add(new AnchorPane(RightPanel = new TextArea()));
+    private String warningStyle = "-fx-control-inner-background: #FF4136;";
+    private String defaultStyle = "";
+
+    public ResChainListPanel(ListView<ResistorChain> list, ListView<String> text, ResCalculator resCalc) {
+        LeftPanel = list;
+        RightPanel = text;
+        resCalculator = resCalc;
+    }
+
+    public void setResCalculator(ResCalculator newVal) {
+        resCalculator = newVal;
     }
 
     /**
@@ -40,12 +45,35 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         LeftPanel.getSelectionModel().selectFirst();
     }
 
-    private void DisplayInfo(ResistorChain chain) {
-        String text = "total resistance: \n";
+    private void displayInfo(ResistorChain chain) {
+        ObservableList<String> comparisons = FXCollections.observableArrayList();
+        double totalRes = 0;
         for (int i = 0; i < chain.resistances.length; i++) {
-            text += "resistance: " + chain.resistances[i] + "\n";
+            totalRes += chain.resistances[i];
         }
-        RightPanel.setText(text);
+        int optimalRes = (int) Math.round(resCalculator.getVoltIn() / chain.getCurrent());
+        comparisons.add("total resistor desired: " + optimalRes + "Ω");
+        comparisons.add("total resistor actual:  " + totalRes + "Ω");
+        comparisons.add("optimal amp: " + chain.getCurrent() + "A");
+        comparisons.add("");
+
+        for (int i = 0; i < chain.getIst().length; i++) {
+            comparisons.add("desired: " + chain.getSoll()[i] + "V, actual: " + Calc.roundWithComma(chain.getIst()[i], 5) + "V ("
+                    + Calc.roundWithComma(chain.getIst()[i] / chain.getSoll()[i], 3) * 100 + "%)");
+        }
+        comparisons.add("");
+        if (chain.getDeviation() >= 0.5) {
+            comparisons.add("Warning! extreme deviation");
+            RightPanel.setStyle(warningStyle);
+        } else if (chain.getDeviation() >= 0.08) {
+            comparisons.add("suboptimal deviation");
+            RightPanel.setStyle("-fx-control-inner-background: #ffd6d6;");
+        } else {
+            RightPanel.setStyle(defaultStyle);
+        }
+
+        comparisons.add("deviation coefficient: " + chain.getDeviation());
+        RightPanel.setItems(comparisons);
     }
 
     /**
@@ -58,6 +86,6 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
      */
     @Override
     public void changed(ObservableValue<? extends ResistorChain> observable, ResistorChain oldValue, ResistorChain newValue) {
-        DisplayInfo(newValue);
+        displayInfo(newValue);
     }
 }
