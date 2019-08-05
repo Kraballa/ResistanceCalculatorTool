@@ -1,5 +1,9 @@
-package Main;
+package Main.Controller;
 
+import Main.Calc;
+import Main.InputCheck;
+import Main.ResCalculator;
+import Main.ResistorChain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,9 +25,9 @@ import java.io.IOException;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
-public class Controller implements ChangeListener<ResistorChain>{
+public class MainController implements ChangeListener<ResistorChain> {
 
-    private Berechner berechner;
+    private ResCalculator resCalculator;
 
     @FXML TextField outputVoltages;
     @FXML TextField inputVoltage;
@@ -81,14 +85,14 @@ public class Controller implements ChangeListener<ResistorChain>{
             listDeviation.setItems(FXCollections.observableArrayList());
             listChains.getItems().clear();
         }
-        berechner = new Berechner(voltIn, voltOut, ampere);
-        berechner.setResistorGroup(InputCheck.parseESeries(choiceGroup.getValue()));
+        resCalculator = new ResCalculator(voltIn, voltOut, ampere);
+        resCalculator.setResistorGroup(InputCheck.parseESeries(choiceGroup.getValue()));
         ObservableList<ResistorChain> items = FXCollections.observableArrayList();
 
         if (ampere.length == 1) {
-            items.add(berechner.calculateChain(ampere[0]));
+            items.add(resCalculator.calculateChain(ampere[0]));
         } else {
-            items.addAll(berechner.calculateChains());
+            items.addAll(resCalculator.calculateChains());
             items = Calc.removeDuplicates(items);
         }
 
@@ -117,7 +121,7 @@ public class Controller implements ChangeListener<ResistorChain>{
 
         ObservableList<ResistorChain> items = FXCollections.observableArrayList();
         int group = Integer.parseInt(choiceGroup2.getValue().replaceAll("[^0123456789]", ""));
-        items.addAll(Berechner.getBestRatioChain(resistBorder, ratioo, group));
+        items.addAll(ResCalculator.getBestRatioChain(resistBorder, ratioo, group));
         listAmplifierChain.setItems(items);
     }
 
@@ -173,7 +177,7 @@ public class Controller implements ChangeListener<ResistorChain>{
         for (int i = 0; i < chain.resistances.length; i++) {
             totalRes += chain.resistances[i];
         }
-        int optimalRes = (int)Math.round(berechner.getVoltIn() / chain.getCurrent());
+        int optimalRes = (int) Math.round(resCalculator.getVoltIn() / chain.getCurrent());
         comparisons.add("total resistor desired: " + optimalRes + "Ω");
         comparisons.add("total resistor actual:  " + totalRes + "Ω");
         comparisons.add("optimal amp: " + chain.getCurrent() + "A");

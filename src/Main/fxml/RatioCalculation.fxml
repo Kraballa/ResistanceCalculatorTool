@@ -31,7 +31,7 @@
                         </Label>
                         <TextField fx:id="resistance" minHeight="32.0" prefHeight="32.0" prefWidth="228.0"
                                    text="20000 60000" HBox.hgrow="NEVER" HBox.margin="$x1"/>
-                        <ChoiceBox id="groupSelector" fx:id="choiceGroup2" blendMode="DARKEN" depthTest="INHERIT"
+                        <ChoiceBox id="groupSelector" fx:id="eSeries" blendMode="DARKEN" depthTest="INHERIT"
                                    maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="32.0"
                                    prefHeight="32.0" HBox.hgrow="NEVER">
                             <items>

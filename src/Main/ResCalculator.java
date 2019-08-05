@@ -12,21 +12,21 @@ import java.util.Collections;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
-public class Berechner{
+public class ResCalculator {
 
     private double voltIn;
     private double[] voltOut;
     private double[] currentBorder;
     private int resistorGroup;
 
-    public Berechner(double input, double[] outputs, double[] current){
+    public ResCalculator(double input, double[] outputs, double[] current) {
         setVoltIn(input);
         setVoltOut(outputs);
         setCurrent(current);
         resistorGroup = 48;
     }
 
-    public Berechner(double input, double[] outputs, double current){
+    public ResCalculator(double input, double[] outputs, double current) {
         this(input,outputs,new double[]{current,current});
     }
 
@@ -66,7 +66,7 @@ public class Berechner{
             chain = chain.add(newResistor);
         }
 
-        chain.setBerechner(new Berechner(voltIn,voltOut,current));
+        chain.setResCalculator(new ResCalculator(voltIn, voltOut, current));
         chain.calcIndividualDeviation(voltIn,voltOut);
         chain.calcGlobalDeviation();
         return chain;

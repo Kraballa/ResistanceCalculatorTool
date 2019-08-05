@@ -15,7 +15,7 @@ public class ResistorChain implements Comparable<ResistorChain>{
 
     private double[] ist;
 
-    private Berechner berechner;
+    private ResCalculator resCalculator;
 
     public ResistorChain(){
         this(new double[]{});
@@ -33,14 +33,14 @@ public class ResistorChain implements Comparable<ResistorChain>{
         widerstNew[resistances.length] = resistance;
         ResistorChain ret = new ResistorChain(widerstNew);
         ret.setIst(this.getIst());
-        if(getBerechner()!=null){
-            ret.setBerechner(getBerechner());
+        if (getResCalculator() != null) {
+            ret.setResCalculator(getResCalculator());
         }
         return ret;
     }
 
     public void calcGlobalDeviation(){
-        double[] soll = getBerechner().getVoltOut();
+        double[] soll = getResCalculator().getVoltOut();
         if (resistances.length != soll.length + 1) {
             return;
         }
@@ -89,20 +89,20 @@ public class ResistorChain implements Comparable<ResistorChain>{
         return deviation;
     }
 
-    public Berechner getBerechner() {
-        return berechner;
+    public ResCalculator getResCalculator() {
+        return resCalculator;
     }
 
-    public void setBerechner(Berechner berechner) {
-        this.berechner = berechner;
+    public void setResCalculator(ResCalculator resCalculator) {
+        this.resCalculator = resCalculator;
     }
 
     public double[] getSoll() {
-        return getBerechner().getVoltOut();
+        return getResCalculator().getVoltOut();
     }
 
     public void setSoll(double[] soll) {
-        getBerechner().setVoltOut(soll);
+        getResCalculator().setVoltOut(soll);
     }
 
     public double[] getIst() {
@@ -114,11 +114,11 @@ public class ResistorChain implements Comparable<ResistorChain>{
     }
 
     public double getCurrent() {
-        return getBerechner().getCurrentBorder()[0];
+        return getResCalculator().getCurrentBorder()[0];
     }
 
     public void setCurrent(double current) {
-        this.getBerechner().setCurrent(current);
+        this.getResCalculator().setCurrent(current);
     }
 
     @Override
