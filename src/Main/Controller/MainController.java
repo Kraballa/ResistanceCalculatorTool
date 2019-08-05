@@ -25,6 +25,7 @@ import java.io.IOException;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
+@Deprecated
 public class MainController implements ChangeListener<ResistorChain> {
 
     private ResCalculator resCalculator;
@@ -211,8 +212,7 @@ public class MainController implements ChangeListener<ResistorChain> {
             stage.setTitle("About");
             stage.setScene(new Scene(root, 550, 450));
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

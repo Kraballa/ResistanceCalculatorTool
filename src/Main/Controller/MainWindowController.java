@@ -12,7 +12,7 @@ public class MainWindowController {
     public void OnOpenAbout() {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("Main/fxml/About.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/About.fxml"));
             Stage stage = new Stage();
             stage.setTitle("About");
             stage.setScene(new Scene(root, 550, 450));

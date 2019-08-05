@@ -19,8 +19,7 @@
             </VBox.margin>
         </Label>
         <HBox minHeight="17.0" VBox.vgrow="NEVER">
-            <TextField fx:id="ratio" minHeight="32.0" minWidth="32.0" prefHeight="32.0" prefWidth="117.0"
-                       text="18">
+            <TextField fx:id="ratio" minHeight="32.0" minWidth="32.0" prefHeight="32.0" prefWidth="117.0" text="18">
                 <HBox.margin>
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
@@ -30,11 +29,10 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </Label>
-            <TextField fx:id="resistance" minHeight="32.0" prefHeight="32.0" prefWidth="228.0"
-                       text="20000 60000" HBox.hgrow="NEVER"/>
-            <ChoiceBox id="groupSelector" fx:id="eSeries" blendMode="DARKEN"
-                       maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="32.0"
-                       prefHeight="32.0" HBox.hgrow="NEVER">
+            <TextField fx:id="resistance" minHeight="32.0" prefHeight="32.0" prefWidth="228.0" text="20000 60000"
+                       HBox.hgrow="NEVER"/>
+            <ChoiceBox id="groupSelector" fx:id="eSeries" blendMode="DARKEN" maxHeight="-Infinity"
+                       maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" HBox.hgrow="NEVER">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Item 1"/>
@@ -43,9 +41,8 @@
                     </FXCollections>
                 </items>
             </ChoiceBox>
-            <Button minHeight="32.0" mnemonicParsing="false"
-                    prefWidth="128.0" text="Button" HBox.hgrow="NEVER"
-                    onAction="#OnConfirmRatioCalculate">
+            <Button minHeight="32.0" mnemonicParsing="false" onAction="#OnConfirmRatioCalculate" prefWidth="128.0"
+                    text="Calculate" HBox.hgrow="NEVER">
                 <HBox.margin>
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
@@ -53,14 +50,14 @@
         </HBox>
         <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" VBox.vgrow="ALWAYS">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                <ListView id="chainList" fx:id="chainList" prefHeight="573.0"
-                          prefWidth="707.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <ListView id="chainList" fx:id="chainList" prefHeight="573.0" prefWidth="707.0"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0">
                 <ListView id="deviationList" fx:id="detailList" prefHeight="160.0" prefWidth="173.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
         </SplitPane>
     </VBox>
