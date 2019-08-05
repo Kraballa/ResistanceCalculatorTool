@@ -39,7 +39,7 @@ public class Controller implements ChangeListener<ResistorChain>{
     @FXML Button calculate;
     @FXML ListView<ResistorChain> listAmplifierChain;
 
-    private String warningStyle = "-fx-background-color: #FF4136;";
+    private String warningStyle = "-fx-control-inner-background: #FF4136;";
     private String defaultStyle = "";
 
     @FXML
@@ -202,7 +202,7 @@ public class Controller implements ChangeListener<ResistorChain>{
     public void OnOpenAbout(){
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("About.fxml"));
+            root = FXMLLoader.load(getClass().getResource("fxml/About.fxml"));
             Stage stage = new Stage();
             stage.setTitle("About");
             stage.setScene(new Scene(root, 550, 450));
