@@ -4,14 +4,13 @@ import Main.Calc;
 
 import java.util.List;
 
-public class ResistanceChain {
+public class ResistanceChain implements Comparable<ResistanceChain> {
 
     private List<Double> resistances;
     private List<Double> desired;
 
     private double[] optimalOutputs;
     private double[] outputs;
-
 
     private double ampere;
     private double voltIn;
@@ -49,6 +48,10 @@ public class ResistanceChain {
         return outputs;
     }
 
+    public double[] getOptimalOutputs() {
+        return optimalOutputs;
+    }
+
     public double getDeviation() {
         calculateDeviationCoefficient();
         return deviationCoefficient;
@@ -70,5 +73,16 @@ public class ResistanceChain {
             dev += Math.pow(currentDeviation / optimalOutputs[i], 2);
         }
         deviationCoefficient = Math.sqrt(dev);
+    }
+
+    @Override
+    public int compareTo(ResistanceChain o) {
+        if (this.getDeviation() > o.getDeviation()) {
+            return -1;
+        } else if (this.getDeviation() < o.getDeviation()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

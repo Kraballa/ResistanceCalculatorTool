@@ -2,8 +2,7 @@ package Main.Logic;
 
 import Main.Calc;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public abstract class ResistanceCalculator {
 
@@ -43,5 +42,23 @@ public abstract class ResistanceCalculator {
             chain.addResistance(newResistor, remainingRes + difference);
         }
         return chain;
+    }
+
+    public static ArrayList<ResistanceChain> getBestRatioChain(double[] range, double ratio, int group) {
+        ArrayList<ResistanceChain> list = new ArrayList<>();
+        if (range.length == 1) {
+            list.add(Calc.getResChainFromRatio(ratio, range[0], group));
+        } else if (range.length == 2) {
+            double[] sRange = range;
+            Arrays.sort(sRange);
+            for (double i = sRange[0]; i <= sRange[1]; i += ((sRange[1] - sRange[0]) / 1000)) {
+                ResistanceChain chain = Calc.getResChainFromRatio(ratio, i, group);
+                if (!list.contains(chain)) {
+                    list.add(chain);
+                }
+            }
+        }
+        Collections.sort(list);
+        return new ArrayList<>(list.subList(0, Math.min(10, list.size())));
     }
 }

@@ -1,9 +1,9 @@
 package Main.Controller;
 
 import Main.InputCheck;
-import Main.ResCalculator;
+import Main.Logic.ResistanceCalculator;
+import Main.Logic.ResistanceChain;
 import Main.ResChainListPanel;
-import Main.ResistorChain;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ public class RatioCalculationController {
     @FXML
     ChoiceBox<String> eSeries;
     @FXML
-    ListView<ResistorChain> chainList;
+    ListView<ResistanceChain> chainList;
     @FXML
     ListView<String> detailList;
 
@@ -46,9 +46,9 @@ public class RatioCalculationController {
         double parsedRatio = InputCheck.parseDoubleArray(ratio.getText(), 1)[0];
         double[] resistBorder = InputCheck.parseDoubleArray(resistance.getText(), 2);
 
-        ObservableList<ResistorChain> resistorChains = FXCollections.observableArrayList();
+        ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
         int eSeries = Integer.parseInt(this.eSeries.getValue().replaceAll("[^0123456789]", ""));
-        resistorChains.addAll(ResCalculator.getBestRatioChain(resistBorder, parsedRatio, eSeries));
+        resistorChains.addAll(ResistanceCalculator.getBestRatioChain(resistBorder, parsedRatio, eSeries));
         resListPanel = new ResChainListPanel(chainList, detailList);
         resListPanel.DisplayResistorList(resistorChains);
     }

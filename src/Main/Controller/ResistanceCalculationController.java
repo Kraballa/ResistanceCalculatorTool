@@ -1,6 +1,9 @@
 package Main.Controller;
 
-import Main.*;
+import Main.InputCheck;
+import Main.Logic.ResistanceCalculator;
+import Main.Logic.ResistanceChain;
+import Main.ResChainListPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,7 +23,7 @@ public class ResistanceCalculationController {
     @FXML
     private TextField current;
     @FXML
-    ListView<ResistorChain> chainList;
+    ListView<ResistanceChain> chainList;
     @FXML
     ListView<String> detailList;
 
@@ -49,6 +52,7 @@ public class ResistanceCalculationController {
         double voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
         double[] voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
         double[] ampere = InputCheck.parseAmpere(current.getText());
+        int eSeries = InputCheck.parseESeries(choiceGroup.getValue());
 
         System.out.println("parsed input");
 
@@ -58,17 +62,14 @@ public class ResistanceCalculationController {
 
         System.out.println("inputs okay");
 
-        ResCalculator resCalculator = new ResCalculator(voltIn, voltOut, ampere);
-        resCalculator.setResistorGroup(InputCheck.parseESeries(choiceGroup.getValue()));
-        ObservableList<ResistorChain> resistorChains = FXCollections.observableArrayList();
+        ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
 
         if (ampere.length == 1) {
-            resistorChains.add(resCalculator.calculateChain(ampere[0]));
+            resistorChains.add(ResistanceCalculator.calculateResistanceChain(voltIn, voltOut, ampere[0], eSeries));
         } else {
-            resistorChains.addAll(resCalculator.calculateChains());
-            resistorChains = Calc.removeDuplicates(resistorChains);
+            resistorChains.addAll(ResistanceCalculator.calculateResistanceChains(voltIn, voltOut, ampere, eSeries));
         }
-        resListPanel = new ResChainListPanel(chainList, detailList, resCalculator);
+        resListPanel = new ResChainListPanel(chainList, detailList);
         resListPanel.DisplayResistorList(resistorChains);
 
         System.out.println("calculated res-chains");
