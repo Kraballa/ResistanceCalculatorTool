@@ -16,6 +16,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
     private ResCalculator resCalculator;
 
     private String warningStyle = "-fx-control-inner-background: #FF4136;";
+    private String suboptimalStyle = "-fx-control-inner-background: #ffd6d6;";
     private String defaultStyle = "";
 
     public ResChainListPanel(ListView<ResistorChain> list, ListView<String> text, ResCalculator resCalc) {
@@ -24,12 +25,17 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         resCalculator = resCalc;
     }
 
+    public ResChainListPanel(ListView<ResistorChain> list, ListView<String> text) {
+        LeftPanel = list;
+        RightPanel = text;
+    }
+
     public void setResCalculator(ResCalculator newVal) {
         resCalculator = newVal;
     }
 
     /**
-     * Setup a List of ResistorChains as well as their more detailed description in a textarea.
+     * Setup a List of ResistorChains as well as their more detailed description in a second list.
      *
      * @param resList list of resistances to display
      */
@@ -51,10 +57,13 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         for (int i = 0; i < chain.resistances.length; i++) {
             totalRes += chain.resistances[i];
         }
-        int optimalRes = (int) Math.round(resCalculator.getVoltIn() / chain.getCurrent());
-        comparisons.add("total resistor desired: " + optimalRes + "Ω");
-        comparisons.add("total resistor actual:  " + totalRes + "Ω");
-        comparisons.add("optimal amp: " + chain.getCurrent() + "A");
+        if (resCalculator != null) {
+            int optimalRes = (int) Math.round(resCalculator.getVoltIn() / chain.getCurrent());
+            comparisons.add("total resistance desired: " + optimalRes + "Ω");
+        }
+
+        comparisons.add("total resistance actual:  " + totalRes + "Ω");
+        comparisons.add("optimal ampere: " + chain.getCurrent() + "A");
         comparisons.add("");
 
         for (int i = 0; i < chain.getIst().length; i++) {
@@ -67,7 +76,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
             RightPanel.setStyle(warningStyle);
         } else if (chain.getDeviation() >= 0.08) {
             comparisons.add("suboptimal deviation");
-            RightPanel.setStyle("-fx-control-inner-background: #ffd6d6;");
+            RightPanel.setStyle(suboptimalStyle);
         } else {
             RightPanel.setStyle(defaultStyle);
         }

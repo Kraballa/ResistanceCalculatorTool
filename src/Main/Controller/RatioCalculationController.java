@@ -25,7 +25,7 @@ public class RatioCalculationController {
     @FXML
     ListView<String> detailList;
 
-    private ResChainListPanel resList;
+    private ResChainListPanel resListPanel;
 
     private String warningStyle = "-fx-control-inner-background: #FF4136;";
     private String defaultStyle = "";
@@ -43,13 +43,14 @@ public class RatioCalculationController {
             return;
         }
 
-        double ratioo = InputCheck.parseDoubleArray(ratio.getText(), 1)[0];
+        double parsedRatio = InputCheck.parseDoubleArray(ratio.getText(), 1)[0];
         double[] resistBorder = InputCheck.parseDoubleArray(resistance.getText(), 2);
 
-        ObservableList<ResistorChain> items = FXCollections.observableArrayList();
-        int group = Integer.parseInt(eSeries.getValue().replaceAll("[^0123456789]", ""));
-        items.addAll(ResCalculator.getBestRatioChain(resistBorder, ratioo, group));
-
+        ObservableList<ResistorChain> resistorChains = FXCollections.observableArrayList();
+        int eSeries = Integer.parseInt(this.eSeries.getValue().replaceAll("[^0123456789]", ""));
+        resistorChains.addAll(ResCalculator.getBestRatioChain(resistBorder, parsedRatio, eSeries));
+        resListPanel = new ResChainListPanel(chainList, detailList);
+        resListPanel.DisplayResistorList(resistorChains);
     }
 
     private boolean inputExists() {

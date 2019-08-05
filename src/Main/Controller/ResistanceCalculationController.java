@@ -24,7 +24,7 @@ public class ResistanceCalculationController {
     @FXML
     ListView<String> detailList;
 
-    private ResChainListPanel resList;
+    private ResChainListPanel resListPanel;
 
     private String warningStyle = "-fx-control-inner-background: #FF4136;";
     private String defaultStyle = "";
@@ -68,8 +68,8 @@ public class ResistanceCalculationController {
             resistorChains.addAll(resCalculator.calculateChains());
             resistorChains = Calc.removeDuplicates(resistorChains);
         }
-        resList = new ResChainListPanel(chainList, detailList, resCalculator);
-        resList.DisplayResistorList(resistorChains);
+        resListPanel = new ResChainListPanel(chainList, detailList, resCalculator);
+        resListPanel.DisplayResistorList(resistorChains);
 
         System.out.println("calculated res-chains");
     }
