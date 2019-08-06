@@ -34,6 +34,9 @@ For the future it will be exceptionally easy to expand this application with mor
 - support multiple languages
 - more unit tests
 
+### Download:
+Simply download `ResistanceCalculatorTool.jar` found in the project root.
+
 ### Problems faced during Development:
 To my knowledge the e series of preferred numbers cannot be calculated mathematically. I came to this conclusion through occasions like:
   * wikipedia and a majority of different sites blatantly rounding 1,4640 to 1,47  and omitting further explanation
