@@ -11,7 +11,7 @@ package Main;
 @Deprecated
 public class ResistorChain implements Comparable<ResistorChain>{
 
-    public final double resistances[];
+    public final double[] resistances;
     private double deviation = 99999;
 
     private double[] ist;

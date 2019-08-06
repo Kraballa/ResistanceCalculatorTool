@@ -10,6 +10,9 @@ import javafx.scene.control.SplitPane;
 
 import java.util.List;
 
+/**
+ * Manages a List that displays ResistanceChains and one that displays detailed information
+ */
 public class ResChainListPanel extends SplitPane implements ChangeListener<ResistanceChain> {
 
     private ListView<ResistanceChain> LeftPanel;
@@ -23,8 +26,10 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         LeftPanel = list;
         RightPanel = text;
     }
+
     /**
      * Setup a List of ResistorChains as well as their more detailed description in a second list.
+     * Also handles ActionListener.
      *
      * @param resList list of resistances to display
      */
@@ -35,26 +40,29 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
         ObservableList<ResistanceChain> items = FXCollections.observableArrayList();
         items.addAll(resList);
-        //items = items.sorted();
 
         LeftPanel.setItems(items);
         LeftPanel.getSelectionModel().selectedItemProperty().addListener(this);
         LeftPanel.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Describes what information the detailed description contains. Mainly serves the purpose of only displaying information
+     * that is available.
+     *
+     * @param chain the chain that stores the information
+     */
     private void displayInfo(ResistanceChain chain) {
         ObservableList<String> comparisons = FXCollections.observableArrayList();
 
         double totalRes = Calc.sumup(chain.getResistances());
-        String totalResText = "total resistance actual:  " + totalRes + "Ω";
-        if (chain.getDesired() != null) {
-            double optimalTotalRes = Calc.sumup(chain.getDesired());
+        String totalResText = "total resistance:  " + totalRes + "Ω";
+        if (chain.getVoltIn() != 0 && chain.getAmpere() != 0) {
+            double optimalTotalRes = chain.getVoltIn() / chain.getAmpere();
             double ratio = 100 * totalRes / optimalTotalRes;
-            comparisons.add("total resistance desired: " + optimalTotalRes + "Ω");
-            totalResText += "(" + ratio + "%)";
+            comparisons.add("total desired resistance: " + optimalTotalRes + "Ω");
+            totalResText += " (" + ratio + "%)";
         }
-
-
         comparisons.add(totalResText);
 
         if (chain.getAmpere() != 0) {
@@ -79,7 +87,6 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
             comparisons.add("deviation coefficient: " + chain.getDeviation());
         }
-
 
         RightPanel.setItems(comparisons);
     }

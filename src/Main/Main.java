@@ -19,9 +19,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        //load main fxml. it contains references to the fxml for the actual program
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/MainWindow.fxml"));
         Parent root = loader.load();
         MainWindowController controller = loader.getController();
+        //pass over hostServices so the controller can open the web browser
         controller.setHostServices(getHostServices());
         primaryStage.setTitle("Resistor Chain Calculator 1.0.3");
         primaryStage.setScene(new Scene(root, 1000, 600));

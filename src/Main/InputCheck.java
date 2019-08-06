@@ -57,7 +57,7 @@ public abstract class InputCheck {
         string = string.replaceAll("[^0123456789.,]", " ");
         int actualLength = length;
         String[] split = string.trim().split("[ ]+");
-        double ret[] = new double[split.length];
+        double[] ret = new double[split.length];
         if (length <= 0) {
             actualLength = ret.length;
         }
