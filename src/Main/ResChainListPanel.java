@@ -35,7 +35,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
         ObservableList<ResistanceChain> items = FXCollections.observableArrayList();
         items.addAll(resList);
-        items = items.sorted();
+        //items = items.sorted();
 
         LeftPanel.setItems(items);
         LeftPanel.getSelectionModel().selectedItemProperty().addListener(this);
@@ -44,12 +44,18 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
     private void displayInfo(ResistanceChain chain) {
         ObservableList<String> comparisons = FXCollections.observableArrayList();
-        double optimalTotalRes = Calc.sumup(chain.getDesired());
-        double totalRes = Calc.sumup(chain.getResistances());
-        double ratio = 100 * totalRes / optimalTotalRes;
 
-        comparisons.add("total resistance desired: " + optimalTotalRes + "Ω");
-        comparisons.add("total resistance actual:  " + totalRes + "Ω (" + ratio + "%)");
+        double totalRes = Calc.sumup(chain.getResistances());
+        String totalResText = "total resistance actual:  " + totalRes + "Ω";
+        if (chain.getDesired() != null) {
+            double optimalTotalRes = Calc.sumup(chain.getDesired());
+            double ratio = 100 * totalRes / optimalTotalRes;
+            comparisons.add("total resistance desired: " + optimalTotalRes + "Ω");
+            totalResText += "(" + ratio + "%)";
+        }
+
+
+        comparisons.add(totalResText);
 
         if (chain.getAmpere() != 0) {
             comparisons.add("optimal ampere: " + chain.getAmpere() + "A");

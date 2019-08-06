@@ -8,6 +8,7 @@
     <top>
         <MenuBar>
             <Menu mnemonicParsing="false" text="Help">
+                <MenuItem mnemonicParsing="false" onAction="#OnViewGitHubRepo" text="View GitHub Repo"/>
                 <MenuItem mnemonicParsing="false" onAction="#OnOpenAbout" text="About"/>
             </Menu>
         </MenuBar>

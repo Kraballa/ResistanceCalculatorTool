@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Controller.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +19,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/MainWindow.fxml"));
+        Parent root = loader.load();
+        MainWindowController controller = loader.getController();
+        controller.setHostServices(getHostServices());
         primaryStage.setTitle("Resistor Chain Calculator 1.0.3");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.setMinHeight(300);

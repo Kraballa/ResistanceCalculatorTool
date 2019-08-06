@@ -17,10 +17,9 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
     private double voltIn;
     private double deviationCoefficient;
 
-    public ResistanceChain(double[] optimalOutputs) {
+    public ResistanceChain() {
         resistances = new LinkedList<>();
         desired = new LinkedList<>();
-        this.optimalOutputs = optimalOutputs;
         ampere = 0;
         voltIn = 0;
     }
@@ -28,6 +27,10 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
     public void addResistance(double res, double target) {
         resistances.add(res);
         desired.add(target);
+    }
+
+    public void setOptimalOutputs(double[] optimalOutputs) {
+        this.optimalOutputs = optimalOutputs;
     }
 
     public void setAmpere(double ampere) {
@@ -98,7 +101,6 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         for (int i = 0; i < resistances.size(); i++) {
             ret.append(Calc.roundWithComma(getResistances()[i], 3)).append("Ω  ");
         }
-        ret.append("= ").append(Calc.roundWithComma(getDeviation(), 5));
         return ret.toString();
     }
 

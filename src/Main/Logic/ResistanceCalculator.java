@@ -17,20 +17,22 @@ public abstract class ResistanceCalculator {
                 chains.add(chain);
             }
         }
+        Collections.sort(chains);
         return new ArrayList<>(chains.subList(0, Math.min(30, chains.size())));
     }
 
     public static ResistanceChain calcResistanceChain(double voltIn, double[] voltOut, double ampere, int eSeries) {
-        ResistanceChain chain = new ResistanceChain(voltOut);
+        ResistanceChain chain = new ResistanceChain();
         chain.setVoltIn(voltIn);
         chain.setAmpere(ampere);
+        chain.setOptimalOutputs(voltOut);
         double remainingRes = voltIn / ampere;
         double difference = 0;
         double newResistance;
 
         for (int i = 0; i < voltOut.length + 1; i++) {
             if (i < voltOut.length) {
-                //ratio = ratio between the desired output and remaining input voltage
+                //ratio between the desired output and remaining input voltage
                 double ratio;
                 if (i == 0) {
                     ratio = voltOut[i] / voltIn;
@@ -61,12 +63,12 @@ public abstract class ResistanceCalculator {
                 }
             }
         }
-        Collections.sort(list);
+        //sorting doesn't work, there's no basis for comparison
         return new ArrayList<>(list.subList(0, Math.min(30, list.size())));
     }
 
     private static ResistanceChain calcChainFromRatio(double ratio, double totalRes, int group) {
-        ResistanceChain chain = new ResistanceChain(new double[]{0});
+        ResistanceChain chain = new ResistanceChain();
         double targetRes = (ratio * totalRes / (ratio + 1));
         double actualRes = Calc.getBestResistance(targetRes, group);
         chain.addResistance(actualRes, targetRes);

@@ -1,5 +1,6 @@
 package Main.Controller;
 
+import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,8 +15,19 @@ public class MainWindowController {
     @FXML
     Label messageLabel;
 
+    private HostServices hostServices;
+
     public void setMessage(String message) {
         messageLabel.setText(message);
+    }
+
+    public void OnViewGitHubRepo() {
+        try {
+            hostServices.showDocument("https://github.com/Kraballa/ResistanceCalculatorTool");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void OnOpenAbout() {
@@ -29,5 +41,9 @@ public class MainWindowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setHostServices(HostServices hostServices) {
+        this.hostServices = hostServices;
     }
 }
