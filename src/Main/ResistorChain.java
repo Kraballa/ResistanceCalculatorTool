@@ -8,6 +8,7 @@ package Main;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
+@Deprecated
 public class ResistorChain implements Comparable<ResistorChain>{
 
     public final double resistances[];

@@ -2,7 +2,10 @@ package Main.Logic;
 
 import Main.Calc;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class ResistanceCalculator {
 
@@ -17,11 +20,13 @@ public abstract class ResistanceCalculator {
         return chains;
     }
 
-    public static ResistanceChain calculateResistanceChain(double voltIn, double[] voltOut, double current, int eSeries) {
+    public static ResistanceChain calculateResistanceChain(double voltIn, double[] voltOut, double ampere, int eSeries) {
         ResistanceChain chain = new ResistanceChain(voltOut);
-        double remainingRes = voltIn / current;
+        chain.setVoltIn(voltIn);
+        chain.setAmpere(ampere);
+        double remainingRes = voltIn / ampere;
         double difference = 0;
-        double newResistor;
+        double newResistance;
 
         for (int i = 0; i < voltOut.length + 1; i++) {
             if (i < voltOut.length) {
@@ -33,26 +38,27 @@ public abstract class ResistanceCalculator {
                     ratio = voltOut[i] / voltOut[i - 1];
                 }
 
-                newResistor = Calc.getBestResistance((remainingRes + difference) - ratio * remainingRes, eSeries);
-                difference = (remainingRes - ratio * remainingRes) - newResistor;
+                newResistance = Calc.getBestResistance((remainingRes + difference) - ratio * remainingRes, eSeries);
+                difference = (remainingRes - ratio * remainingRes) - newResistance;
             } else {
-                newResistor = Calc.getBestResistance(remainingRes + difference, eSeries);
+                newResistance = Calc.getBestResistance(remainingRes + difference, eSeries);
             }
-            remainingRes -= newResistor;
-            chain.addResistance(newResistor, remainingRes + difference);
+            remainingRes -= newResistance;
+            chain.addResistance(newResistance, remainingRes + difference);
+            System.out.println("newRes: " + newResistance + ", remainingRes: " + remainingRes);
         }
+        System.out.println("------------");
         return chain;
     }
 
     public static ArrayList<ResistanceChain> getBestRatioChain(double[] range, double ratio, int group) {
         ArrayList<ResistanceChain> list = new ArrayList<>();
         if (range.length == 1) {
-            list.add(Calc.getResChainFromRatio(ratio, range[0], group));
+            list.add(getResChainFromRatio(ratio, range[0], group));
         } else if (range.length == 2) {
             double[] sRange = range;
-            Arrays.sort(sRange);
             for (double i = sRange[0]; i <= sRange[1]; i += ((sRange[1] - sRange[0]) / 1000)) {
-                ResistanceChain chain = Calc.getResChainFromRatio(ratio, i, group);
+                ResistanceChain chain = getResChainFromRatio(ratio, i, group);
                 if (!list.contains(chain)) {
                     list.add(chain);
                 }
@@ -60,5 +66,16 @@ public abstract class ResistanceCalculator {
         }
         Collections.sort(list);
         return new ArrayList<>(list.subList(0, Math.min(10, list.size())));
+    }
+
+    public static ResistanceChain getResChainFromRatio(double ratio, double totalRes, int group) {
+        ResistanceChain chain = new ResistanceChain(new double[]{0});
+        double targetRes = (ratio * totalRes / (ratio + 1));
+        double actualRes = Calc.getBestResistance(targetRes, group);
+        chain.addResistance(actualRes, targetRes);
+        targetRes = totalRes - actualRes;
+        actualRes = Calc.getBestResistance(targetRes, group);
+        chain.addResistance(actualRes, targetRes);
+        return chain;
     }
 }

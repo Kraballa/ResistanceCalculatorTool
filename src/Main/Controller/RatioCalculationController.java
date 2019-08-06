@@ -27,13 +27,13 @@ public class RatioCalculationController {
 
     private ResChainListPanel resListPanel;
 
-    private String warningStyle = "-fx-control-inner-background: #FF4136;";
+    private String errorStyle = "-fx-control-inner-background: #FF4136;";
     private String defaultStyle = "";
 
     @FXML
     public void initialize() {
         eSeries.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
-        eSeries.setValue("e48");
+        eSeries.setValue("e96");
 
         eSeries.setTooltip(new Tooltip("e series"));
     }
@@ -56,14 +56,14 @@ public class RatioCalculationController {
     private boolean inputExists() {
         boolean ret = true;
         if (ratio.getText().trim().equals("")) {
-            ratio.setStyle(warningStyle);
+            ratio.setStyle(errorStyle);
             ret = false;
         } else {
             ratio.setStyle(defaultStyle);
         }
 
         if (resistance.getText().trim().equals("")) {
-            resistance.setStyle(warningStyle);
+            resistance.setStyle(errorStyle);
             ret = false;
         } else {
             resistance.setStyle(defaultStyle);

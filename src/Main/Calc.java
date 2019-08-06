@@ -137,6 +137,8 @@ public abstract class Calc {
         return best;
     }
 
+
+    @Deprecated
     public static ResistorChain getChainFromRatio(double ratio, double totalRes, int group){
         ResistorChain chain = new ResistorChain();
         double tempRes = (ratio*totalRes/(ratio+1));
@@ -148,6 +150,7 @@ public abstract class Calc {
         return chain;
     }
 
+    @Deprecated
     public static ObservableList<ResistorChain> removeDuplicates(ObservableList<ResistorChain> chainList) {
         ObservableList<ResistorChain> uniqueList = FXCollections.observableArrayList();
 

@@ -12,6 +12,7 @@ import java.util.Collections;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
+@Deprecated
 public class ResCalculator {
 
     private double voltIn;

@@ -29,13 +29,13 @@ public class ResistanceCalculationController {
 
     private ResChainListPanel resListPanel;
 
-    private String warningStyle = "-fx-control-inner-background: #FF4136;";
+    private String errorStyle = "-fx-control-inner-background: #FF4136;";
     private String defaultStyle = "";
 
     @FXML
     public void initialize() {
         choiceGroup.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
-        choiceGroup.setValue("e48");
+        choiceGroup.setValue("e96");
 
         outputVoltages.setTooltip(new Tooltip("desired output voltages"));
         inputVoltage.setTooltip(new Tooltip("input voltage"));
@@ -79,21 +79,21 @@ public class ResistanceCalculationController {
         boolean ret = true;
 
         if (inputVoltage.getText().trim().equals("")) {
-            inputVoltage.setStyle(warningStyle);
+            inputVoltage.setStyle(errorStyle);
             ret = false;
         } else {
             inputVoltage.setStyle(defaultStyle);
         }
 
         if (outputVoltages.getText().trim().equals("")) {
-            outputVoltages.setStyle(warningStyle);
+            outputVoltages.setStyle(errorStyle);
             ret = false;
         } else {
             outputVoltages.setStyle(defaultStyle);
         }
 
         if (current.getText().trim().equals("")) {
-            current.setStyle(warningStyle);
+            current.setStyle(errorStyle);
             ret = false;
         } else {
             current.setStyle(defaultStyle);

@@ -2,6 +2,7 @@ package Main.Logic;
 
 import Main.Calc;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ResistanceChain implements Comparable<ResistanceChain> {
@@ -17,12 +18,22 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
     private double deviationCoefficient;
 
     public ResistanceChain(double[] optimalOutputs) {
+        resistances = new LinkedList<>();
+        desired = new LinkedList<>();
         this.optimalOutputs = optimalOutputs;
     }
 
     public void addResistance(double res, double target) {
         resistances.add(res);
-        resistances.add(target);
+        desired.add(target);
+    }
+
+    public void setAmpere(double ampere) {
+        this.ampere = ampere;
+    }
+
+    public void setVoltIn(double voltIn) {
+        this.voltIn = voltIn;
     }
 
     public void calculateOutputs() {
@@ -61,6 +72,10 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         return ampere;
     }
 
+    public double getVoltIn() {
+        return voltIn;
+    }
+
     private void calculateDeviationCoefficient() {
         if (resistances.size() != optimalOutputs.length + 1) {
             return;
@@ -76,11 +91,40 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
     }
 
     @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < resistances.size(); i++) {
+            ret.append(Calc.roundWithComma(getResistances()[i], 3)).append("Ω  ");
+        }
+        ret.append("= ").append(Calc.roundWithComma(getDeviation(), 5));
+        return ret.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ResistanceChain) {
+            ResistanceChain chain = (ResistanceChain) o;
+            if (this.resistances.size() == chain.resistances.size()) {
+                for (int i = 0; i < resistances.size(); i++) {
+                    if (getResistances()[i] != chain.getResistances()[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public int compareTo(ResistanceChain o) {
         if (this.getDeviation() > o.getDeviation()) {
-            return -1;
-        } else if (this.getDeviation() < o.getDeviation()) {
             return 1;
+        } else if (this.getDeviation() < o.getDeviation()) {
+            return -1;
         } else {
             return 0;
         }

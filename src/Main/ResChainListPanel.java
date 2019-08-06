@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Logic.ResistanceChain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -9,66 +10,50 @@ import javafx.scene.control.SplitPane;
 
 import java.util.List;
 
-public class ResChainListPanel extends SplitPane implements ChangeListener<ResistorChain> {
+public class ResChainListPanel extends SplitPane implements ChangeListener<ResistanceChain> {
 
-    private ListView<ResistorChain> LeftPanel;
+    private ListView<ResistanceChain> LeftPanel;
     private ListView<String> RightPanel;
-    private ResCalculator resCalculator;
 
     private String warningStyle = "-fx-control-inner-background: #FF4136;";
     private String suboptimalStyle = "-fx-control-inner-background: #ffd6d6;";
     private String defaultStyle = "";
 
-    public ResChainListPanel(ListView<ResistorChain> list, ListView<String> text, ResCalculator resCalc) {
-        LeftPanel = list;
-        RightPanel = text;
-        resCalculator = resCalc;
-    }
-
-    public ResChainListPanel(ListView<ResistorChain> list, ListView<String> text) {
+    public ResChainListPanel(ListView<ResistanceChain> list, ListView<String> text) {
         LeftPanel = list;
         RightPanel = text;
     }
-
-    public void setResCalculator(ResCalculator newVal) {
-        resCalculator = newVal;
-    }
-
     /**
      * Setup a List of ResistorChains as well as their more detailed description in a second list.
      *
      * @param resList list of resistances to display
      */
-    public void DisplayResistorList(List<ResistorChain> resList) {
+    public void DisplayResistorList(List<ResistanceChain> resList) {
         if (!LeftPanel.getSelectionModel().isEmpty()) {
             LeftPanel.getSelectionModel().selectedItemProperty().removeListener(this);
         }
 
-        ObservableList<ResistorChain> items = FXCollections.observableArrayList();
+        ObservableList<ResistanceChain> items = FXCollections.observableArrayList();
         items.addAll(resList);
+        items = items.sorted();
+
         LeftPanel.setItems(items);
         LeftPanel.getSelectionModel().selectedItemProperty().addListener(this);
         LeftPanel.getSelectionModel().selectFirst();
     }
 
-    private void displayInfo(ResistorChain chain) {
+    private void displayInfo(ResistanceChain chain) {
         ObservableList<String> comparisons = FXCollections.observableArrayList();
-        double totalRes = 0;
-        for (int i = 0; i < chain.resistances.length; i++) {
-            totalRes += chain.resistances[i];
-        }
-        if (resCalculator != null) {
-            int optimalRes = (int) Math.round(resCalculator.getVoltIn() / chain.getCurrent());
-            comparisons.add("total resistance desired: " + optimalRes + "Ω");
-        }
+        double totalRes = Calc.sumup(chain.getResistances());
 
+        comparisons.add("total resistance desired: " + Calc.sumup(chain.getDesired()) + "Ω");
         comparisons.add("total resistance actual:  " + totalRes + "Ω");
-        comparisons.add("optimal ampere: " + chain.getCurrent() + "A");
+        comparisons.add("optimal ampere: " + chain.getAmpere() + "A");
         comparisons.add("");
 
-        for (int i = 0; i < chain.getIst().length; i++) {
-            comparisons.add("desired: " + chain.getSoll()[i] + "V, actual: " + Calc.roundWithComma(chain.getIst()[i], 5) + "V ("
-                    + Calc.roundWithComma(chain.getIst()[i] / chain.getSoll()[i], 3) * 100 + "%)");
+        for (int i = 0; i < chain.getOptimalOutputs().length; i++) {
+            comparisons.add("desired: " + chain.getOptimalOutputs()[i] + "V, actual: " + chain.getOutputs()[i] + "V ("
+                    + (chain.getOptimalOutputs()[i] / chain.getOutputs()[i] * 100) + "%)");
         }
         comparisons.add("");
         if (chain.getDeviation() >= 0.5) {
@@ -94,7 +79,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
      * @param newValue
      */
     @Override
-    public void changed(ObservableValue<? extends ResistorChain> observable, ResistorChain oldValue, ResistorChain newValue) {
+    public void changed(ObservableValue<? extends ResistanceChain> observable, ResistanceChain oldValue, ResistanceChain newValue) {
         displayInfo(newValue);
     }
 }
