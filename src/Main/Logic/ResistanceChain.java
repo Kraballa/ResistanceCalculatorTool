@@ -5,6 +5,13 @@ import Main.Calc;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
+ */
 public class ResistanceChain implements Comparable<ResistanceChain> {
 
     private List<Double> resistances;

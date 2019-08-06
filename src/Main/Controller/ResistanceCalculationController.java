@@ -12,6 +12,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
+ */
 public class ResistanceCalculationController {
 
     @FXML

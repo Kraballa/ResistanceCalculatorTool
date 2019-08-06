@@ -10,8 +10,12 @@ import javafx.scene.control.SplitPane;
 
 import java.util.List;
 
-/**
- * Manages a List that displays ResistanceChains and one that displays detailed information
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
  */
 public class ResChainListPanel extends SplitPane implements ChangeListener<ResistanceChain> {
 

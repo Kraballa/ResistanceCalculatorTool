@@ -1,5 +1,12 @@
 package Main;
 
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
+ */
 public abstract class InputCheck {
 
     public static boolean checkVoltIn(double voltIn, double[] voltOut) {
