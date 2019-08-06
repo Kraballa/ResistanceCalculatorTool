@@ -65,9 +65,9 @@ public class ResistanceCalculationController {
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
 
         if (ampere.length == 1) {
-            resistorChains.add(ResistanceCalculator.calculateResistanceChain(voltIn, voltOut, ampere[0], eSeries));
+            resistorChains.add(ResistanceCalculator.calcResistanceChain(voltIn, voltOut, ampere[0], eSeries));
         } else {
-            resistorChains.addAll(ResistanceCalculator.calculateResistanceChains(voltIn, voltOut, ampere, eSeries));
+            resistorChains.addAll(ResistanceCalculator.calcResistanceChains(voltIn, voltOut, ampere, eSeries));
         }
         resListPanel = new ResChainListPanel(chainList, detailList);
         resListPanel.DisplayResistorList(resistorChains);

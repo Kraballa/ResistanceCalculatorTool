@@ -9,18 +9,18 @@ import java.util.List;
 
 public abstract class ResistanceCalculator {
 
-    public static List<ResistanceChain> calculateResistanceChains(double voltIn, double[] voltOut, double[] currents, int eSeries) {
+    public static List<ResistanceChain> calcResistanceChains(double voltIn, double[] voltOut, double[] currents, int eSeries) {
         List<ResistanceChain> chains = new LinkedList<>();
         for (double current = currents[0]; current <= currents[1]; current += ((currents[1] - currents[0]) / 1000)) {
-            ResistanceChain chain = calculateResistanceChain(voltIn, voltOut, current, eSeries);
+            ResistanceChain chain = calcResistanceChain(voltIn, voltOut, current, eSeries);
             if (!chains.contains(chain)) {
                 chains.add(chain);
             }
         }
-        return chains;
+        return new ArrayList<>(chains.subList(0, Math.min(30, chains.size())));
     }
 
-    public static ResistanceChain calculateResistanceChain(double voltIn, double[] voltOut, double ampere, int eSeries) {
+    public static ResistanceChain calcResistanceChain(double voltIn, double[] voltOut, double ampere, int eSeries) {
         ResistanceChain chain = new ResistanceChain(voltOut);
         chain.setVoltIn(voltIn);
         chain.setAmpere(ampere);
@@ -49,24 +49,23 @@ public abstract class ResistanceCalculator {
         return chain;
     }
 
-    public static ArrayList<ResistanceChain> getBestRatioChain(double[] range, double ratio, int group) {
+    public static ArrayList<ResistanceChain> calcChainsFromRatio(double[] range, double ratio, int group) {
         ArrayList<ResistanceChain> list = new ArrayList<>();
         if (range.length == 1) {
-            list.add(getResChainFromRatio(ratio, range[0], group));
+            list.add(calcChainFromRatio(ratio, range[0], group));
         } else if (range.length == 2) {
-            double[] sRange = range;
-            for (double i = sRange[0]; i <= sRange[1]; i += ((sRange[1] - sRange[0]) / 1000)) {
-                ResistanceChain chain = getResChainFromRatio(ratio, i, group);
+            for (double i = range[0]; i <= range[1]; i += ((range[1] - range[0]) / 1000)) {
+                ResistanceChain chain = calcChainFromRatio(ratio, i, group);
                 if (!list.contains(chain)) {
                     list.add(chain);
                 }
             }
         }
         Collections.sort(list);
-        return new ArrayList<>(list.subList(0, Math.min(10, list.size())));
+        return new ArrayList<>(list.subList(0, Math.min(30, list.size())));
     }
 
-    public static ResistanceChain getResChainFromRatio(double ratio, double totalRes, int group) {
+    private static ResistanceChain calcChainFromRatio(double ratio, double totalRes, int group) {
         ResistanceChain chain = new ResistanceChain(new double[]{0});
         double targetRes = (ratio * totalRes / (ratio + 1));
         double actualRes = Calc.getBestResistance(targetRes, group);

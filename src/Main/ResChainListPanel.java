@@ -44,42 +44,44 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
     private void displayInfo(ResistanceChain chain) {
         ObservableList<String> comparisons = FXCollections.observableArrayList();
+        double optimalTotalRes = Calc.sumup(chain.getDesired());
         double totalRes = Calc.sumup(chain.getResistances());
+        double ratio = 100 * totalRes / optimalTotalRes;
 
-        comparisons.add("total resistance desired: " + Calc.sumup(chain.getDesired()) + "Ω");
-        comparisons.add("total resistance actual:  " + totalRes + "Ω");
-        comparisons.add("optimal ampere: " + chain.getAmpere() + "A");
-        comparisons.add("");
+        comparisons.add("total resistance desired: " + optimalTotalRes + "Ω");
+        comparisons.add("total resistance actual:  " + totalRes + "Ω (" + ratio + "%)");
 
-        for (int i = 0; i < chain.getOptimalOutputs().length; i++) {
-            comparisons.add("desired: " + chain.getOptimalOutputs()[i] + "V, actual: " + chain.getOutputs()[i] + "V ("
-                    + (chain.getOptimalOutputs()[i] / chain.getOutputs()[i] * 100) + "%)");
+        if (chain.getAmpere() != 0) {
+            comparisons.add("optimal ampere: " + chain.getAmpere() + "A");
+            comparisons.add("");
+
+            for (int i = 0; i < chain.getOptimalOutputs().length; i++) {
+                comparisons.add("desired: " + chain.getOptimalOutputs()[i] + "V, actual: " + chain.getOutputs()[i] + "V ("
+                        + (chain.getOptimalOutputs()[i] / chain.getOutputs()[i] * 100) + "%)");
+            }
+
+            comparisons.add("");
+            if (chain.getDeviation() >= 0.5) {
+                comparisons.add("Warning! extreme deviation");
+                RightPanel.setStyle(warningStyle);
+            } else if (chain.getDeviation() >= 0.08) {
+                comparisons.add("suboptimal deviation");
+                RightPanel.setStyle(suboptimalStyle);
+            } else {
+                RightPanel.setStyle(defaultStyle);
+            }
+
+            comparisons.add("deviation coefficient: " + chain.getDeviation());
         }
-        comparisons.add("");
-        if (chain.getDeviation() >= 0.5) {
-            comparisons.add("Warning! extreme deviation");
-            RightPanel.setStyle(warningStyle);
-        } else if (chain.getDeviation() >= 0.08) {
-            comparisons.add("suboptimal deviation");
-            RightPanel.setStyle(suboptimalStyle);
-        } else {
-            RightPanel.setStyle(defaultStyle);
-        }
 
-        comparisons.add("deviation coefficient: " + chain.getDeviation());
+
         RightPanel.setItems(comparisons);
     }
 
-    /**
-     * Gets called whenever an item is selected in the LeftPanel List. Runs a method that changes the text of RightPanel
-     * with detailed information about the newly selected ResistorChain.
-     *
-     * @param observable
-     * @param oldValue
-     * @param newValue
-     */
     @Override
     public void changed(ObservableValue<? extends ResistanceChain> observable, ResistanceChain oldValue, ResistanceChain newValue) {
-        displayInfo(newValue);
+        if (newValue != null) {
+            displayInfo(newValue);
+        }
     }
 }

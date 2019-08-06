@@ -21,6 +21,8 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         resistances = new LinkedList<>();
         desired = new LinkedList<>();
         this.optimalOutputs = optimalOutputs;
+        ampere = 0;
+        voltIn = 0;
     }
 
     public void addResistance(double res, double target) {
@@ -36,7 +38,7 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         this.voltIn = voltIn;
     }
 
-    public void calculateOutputs() {
+    private void calculateOutputs() {
         outputs = new double[resistances.size() - 1];
 
         double[] resistanceArray = getResistances();
@@ -121,12 +123,6 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
 
     @Override
     public int compareTo(ResistanceChain o) {
-        if (this.getDeviation() > o.getDeviation()) {
-            return 1;
-        } else if (this.getDeviation() < o.getDeviation()) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return Double.compare(this.getDeviation(), o.getDeviation());
     }
 }
