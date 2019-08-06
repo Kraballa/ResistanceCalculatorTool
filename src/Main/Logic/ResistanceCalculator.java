@@ -45,9 +45,7 @@ public abstract class ResistanceCalculator {
             }
             remainingRes -= newResistance;
             chain.addResistance(newResistance, remainingRes + difference);
-            System.out.println("newRes: " + newResistance + ", remainingRes: " + remainingRes);
         }
-        System.out.println("------------");
         return chain;
     }
 
