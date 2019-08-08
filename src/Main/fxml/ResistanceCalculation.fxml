@@ -4,7 +4,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import java.lang.String?>
+<?import java.lang.*?>
 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="392.0" prefWidth="527.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="Main.Controller.ResistanceCalculationController">
@@ -33,9 +33,13 @@
                        maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" HBox.hgrow="NEVER">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Item 1"/>
-                        <String fx:value="Item 2"/>
-                        <String fx:value="Item 3"/>
+                        <String fx:value="e3"/>
+                        <String fx:value="e6"/>
+                        <String fx:value="e12"/>
+                        <String fx:value="e24"/>
+                        <String fx:value="e48"/>
+                        <String fx:value="e96"/>
+                        <String fx:value="e192"/>
                     </FXCollections>
                 </items>
             </ChoiceBox>
@@ -64,7 +68,7 @@
             <Button id="confirmOutput" minHeight="32.0" minWidth="-Infinity" mnemonicParsing="false"
                     onAction="#OnConfirmCalculate" prefHeight="32.0" prefWidth="128.0" text="Calculate">
                 <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0"/>
+                    <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>
             </Button>
         </HBox>

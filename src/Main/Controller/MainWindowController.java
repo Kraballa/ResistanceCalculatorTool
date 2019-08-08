@@ -3,9 +3,12 @@ package Main.Controller;
 import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +24,8 @@ public class MainWindowController {
 
     @FXML
     Label messageLabel;
+    @FXML
+    TabPane tabPane;
 
     private HostServices hostServices;
 
@@ -45,6 +50,30 @@ public class MainWindowController {
             stage.setTitle("About");
             stage.setScene(new Scene(root, 550, 450));
             stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void OnAddResCalc() {
+        Tab newTab = new Tab("Resistance Chain");
+        Node content = null;
+        try {
+            content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/ResistanceCalculation.fxml"));
+            newTab.setContent(content);
+            tabPane.getTabs().add(newTab);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void OnAddRatioCalc() {
+        Tab newTab = new Tab("Resistance Ratio");
+        Node content = null;
+        try {
+            content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/RatioCalculation.fxml"));
+            newTab.setContent(content);
+            tabPane.getTabs().add(newTab);
         } catch (IOException e) {
             e.printStackTrace();
         }

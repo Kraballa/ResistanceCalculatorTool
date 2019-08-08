@@ -39,7 +39,7 @@ public class RatioCalculationController {
 
     @FXML
     public void initialize() {
-        eSeries.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
+        //eSeries.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
         eSeries.setValue("e96");
 
         eSeries.setTooltip(new Tooltip("e series"));

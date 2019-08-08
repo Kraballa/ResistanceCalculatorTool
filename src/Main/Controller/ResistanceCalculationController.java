@@ -41,7 +41,7 @@ public class ResistanceCalculationController {
 
     @FXML
     public void initialize() {
-        choiceGroup.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
+        //choiceGroup.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
         choiceGroup.setValue("e96");
 
         outputVoltages.setTooltip(new Tooltip("desired output voltages"));

@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 
@@ -22,8 +23,8 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
     private ListView<ResistanceChain> LeftPanel;
     private ListView<String> RightPanel;
 
-    private String warningStyle = "-fx-control-inner-background: #FF4136;";
-    private String suboptimalStyle = "-fx-control-inner-background: #ffd6d6;";
+    private String warningStyle = "-fx-control-inner-background: #ffa1a1;";
+    private String suboptimalStyle = "-fx-control-inner-background: #ffe0c7;";
     private String defaultStyle = "";
 
     public ResChainListPanel(ListView<ResistanceChain> list, ListView<String> text) {
@@ -46,6 +47,32 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         items.addAll(resList);
 
         LeftPanel.setItems(items);
+
+        LeftPanel.setCellFactory(param -> new ListCell<ResistanceChain>() {
+            @Override
+            protected void updateItem(ResistanceChain item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(null);
+                } else {
+                    setText(item.toString());
+                    if (item.getVoltIn() != 0 && item.getAmpere() != 0) {
+                        if (item.getDeviation() >= 0.5) {
+                            setStyle(warningStyle);
+                        } else if (item.getDeviation() >= 0.08) {
+                            setStyle(suboptimalStyle);
+                        } else {
+                            setStyle(defaultStyle);
+                        }
+                    } else {
+                        setStyle(defaultStyle);
+                    }
+                }
+            }
+        });
+
         LeftPanel.getSelectionModel().selectedItemProperty().addListener(this);
         LeftPanel.getSelectionModel().selectFirst();
     }

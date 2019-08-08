@@ -82,14 +82,14 @@ public abstract class ResistanceCalculator {
      * @param ratio    the ratio between the first and second (which is also the last) resistor
      * @param resRange range of total resistances
      * @param eSeries  the eSeries that is being used
-     * @return a sorted list of the 300 best (out of 1000) ResistanceChains as calculated using the calcChainFromRatio method
+     * @return a sorted list of the 30 best (out of 1000) ResistanceChains as calculated using the calcChainFromRatio method
      */
     public static ArrayList<ResistanceChain> calcChainsFromRatio(double ratio, double[] resRange, int eSeries) {
         ArrayList<ResistanceChain> list = new ArrayList<>();
         if (resRange.length == 1) {
             list.add(calcChainFromRatio(ratio, resRange[0], eSeries));
         } else if (resRange.length == 2) {
-            for (double i = resRange[0]; i <= resRange[1]; i += ((resRange[1] - resRange[0]) / 1000)) {
+            for (double i = resRange[0]; i <= resRange[1]; i += ((resRange[1] - resRange[0]) / 30)) {
                 ResistanceChain chain = calcChainFromRatio(ratio, i, eSeries);
                 if (!list.contains(chain)) {
                     list.add(chain);
@@ -97,7 +97,7 @@ public abstract class ResistanceCalculator {
             }
         }
         //sorting doesn't work, there's no basis for comparison
-        return new ArrayList<>(list.subList(0, Math.min(30, list.size())));
+        return list; //new ArrayList<>(list.subList(0, Math.min(30, list.size())));
     }
 
     /**
