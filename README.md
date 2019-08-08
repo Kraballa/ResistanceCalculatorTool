@@ -1,5 +1,7 @@
 # Resistance Calculator Tool v1.0.3
 
+![Resistance Calculator Preview](res/ResCalcPreview.png "Resistance Chain Calculator displaying detailed information on a selected Resistance Chain") 
+
 **DISCLAIMER: This tool was tested manually so there might be errors I'm not yet aware of. 
 I would like to guarantee the correctness of its results but I cannot.
 Before using any of the results in actual circuits please make sure they are correct. 
