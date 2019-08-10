@@ -46,6 +46,9 @@ For the future it will be exceptionally easy to expand this application with mor
 ### Future goals:
 
 - better described inputs
+- SI scale units
+- use ratio as basis for comparison
+- detailed info panel to TextArea
 - options for number of calculations
 - display the help image `res\ResCalcHelp.png`
 - check github if a new version is available

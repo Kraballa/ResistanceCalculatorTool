@@ -149,12 +149,15 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         gc.setLineWidth(2);
 
         int[] pos = new int[]{25, (int) Canvas.getHeight() / 2};
+        gc.strokeLine(pos[0], pos[1], pos[0], pos[1] - 15);
+        gc.strokeLine(pos[0], pos[1] - 15, pos[0] - 6, pos[1] - 9);
+        gc.strokeLine(pos[0], pos[1] - 15, pos[0] + 6, pos[1] - 9);
         if (chain.getVoltIn() != 0) {
             gc.setLineWidth(1);
-            gc.strokeText(Calc.roundWithComma(chain.getVoltIn(), 2) + " V", pos[0] + 5, pos[1] - 10);
-
+            gc.strokeText(Calc.roundWithComma(chain.getVoltIn(), 2) + " V", pos[0] - 8, pos[1] - 20);
             gc.setLineWidth(2);
-            lineOffset(gc, pos, 20);
+
+            //lineOffset(gc, pos, 20);
         }
 
         double[] outputs = chain.getOutputs();
@@ -166,6 +169,8 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
             }
             gc.setLineWidth(2);
         }
+        gc.strokeLine(pos[0], pos[1], pos[0], pos[1] + 15);
+        gc.strokeLine(pos[0] - 5, pos[1] + 15, pos[0] + 5, pos[1] + 15);
     }
 
     private int[] drawResistor(GraphicsContext gc, int value, int[] pos) {

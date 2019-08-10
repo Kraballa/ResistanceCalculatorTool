@@ -55,7 +55,7 @@ public abstract class Calc {
     public static double roundWithComma(double number, int commavalues){
         double ret = number;
         double factor = Math.max(1,Math.pow(10,commavalues));
-        ret = ((int)Math.round((factor)*ret))/factor;
+        ret = (Math.round((factor) * ret)) / factor;
         return ret;
     }
 

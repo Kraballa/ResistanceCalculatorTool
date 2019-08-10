@@ -15,7 +15,7 @@
         <padding>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
         </padding>
-        <Label minHeight="32.0" prefWidth="382.0" text="input voltage, e series and ampere">
+        <Label minHeight="32.0" prefWidth="382.0" text="input voltage, e series, ampere and desired output voltages">
             <VBox.margin>
                 <Insets left="15.0" right="5.0"/>
             </VBox.margin>
@@ -55,7 +55,7 @@
             <TextField fx:id="outputVoltages" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0"
                        prefWidth="335.0" promptText="desired output voltage" text="8 4 2" HBox.hgrow="ALWAYS">
                 <HBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0"/>
+                    <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>
             </TextField>
             <Button id="confirmOutput" minHeight="32.0" minWidth="-Infinity"
@@ -65,12 +65,6 @@
                 </HBox.margin>
             </Button>
         </HBox>
-        <Separator prefWidth="200.0" scaleY="2.0"/>
-        <Label minHeight="32.0" prefWidth="382.0" text="desired output voltages">
-            <VBox.margin>
-                <Insets left="15.0" right="5.0"/>
-            </VBox.margin>
-        </Label>
         <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" maxHeight="1.7976931348623157E308"
                    maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" VBox.vgrow="ALWAYS">
             <VBox.margin>
