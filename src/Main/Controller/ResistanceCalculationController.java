@@ -58,12 +58,21 @@ public class ResistanceCalculationController {
             return;
         }
 
-        //parse input
-        double voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
-        double[] voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
-        double[] ampere = InputCheck.parseAmpere(current.getText());
-        int eSeries = InputCheck.parseESeries(choiceGroup.getValue());
+        double voltIn;
+        double[] voltOut;
+        double[] ampere;
+        int eSeries;
 
+        //parse input
+        try {
+            voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
+            voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
+            ampere = InputCheck.parseAmpere(current.getText());
+            eSeries = InputCheck.parseESeries(choiceGroup.getValue());
+        } catch (NumberFormatException nfe) {
+            System.out.println("could not parse inputs");
+            return;
+        }
         System.out.println("parsed input");
 
         if (!(InputCheck.checkAmpere(ampere) && InputCheck.checkVoltOut(voltOut) && InputCheck.checkVoltIn(voltIn, voltOut))) {

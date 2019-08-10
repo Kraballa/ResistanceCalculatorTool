@@ -130,7 +130,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
                 RightPanel.setStyle(defaultStyle);
             }
 
-            comparisons.add("deviation coefficient: " + chain.getDeviation());
+            comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 6));
         }
 
         RightPanel.setItems(comparisons);

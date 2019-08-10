@@ -60,8 +60,9 @@ public abstract class InputCheck {
         return Integer.parseInt(input.replaceAll("[^0123456789]", ""));
     }
 
-    public static double[] parseDoubleArray(String string, int length) {
-        string = string.replaceAll("[^0123456789.,]", " ");
+    public static double[] parseDoubleArray(String string, int length) throws NumberFormatException {
+        //string = string.replaceAll("[^0123456789.,]", " ");
+        string = string.replaceAll(",", ".");
         int actualLength = length;
         String[] split = string.trim().split("[ ]+");
         double[] ret = new double[split.length];
@@ -69,7 +70,7 @@ public abstract class InputCheck {
             actualLength = ret.length;
         }
         for (int i = 0; i < Math.min(ret.length, actualLength); i++) {
-            ret[i] = Double.parseDouble(split[i].replaceAll(",", "."));
+            ret[i] = Double.parseDouble(split[i]);
         }
         return ret;
     }
