@@ -1,18 +1,17 @@
 package Main;
 
+import Main.Logic.ResistanceChain;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+class ResistanceChainTest {
 
-class ResistorChainTest {
-
-    ResistorChain chain;
+    ResistanceChain chain;
 
     @BeforeEach
     void setUp() {
-        chain = new ResistorChain();
+        chain = new ResistanceChain();
     }
 
     @AfterEach
@@ -22,10 +21,7 @@ class ResistorChainTest {
 
     @Test
     void add() {
-        chain.add(1.0);
-        assertEquals(0, chain.resistances.length);
-        chain = chain.add(1.0);
-        assertEquals(1.0, chain.resistances[0], 0.00001);
+
     }
 
     @Test

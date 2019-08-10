@@ -8,9 +8,6 @@ package Main;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public abstract class Calc {
 
     private static double[] e3 = new double[]{1, 2.2, 4.7};
@@ -136,34 +133,5 @@ public abstract class Calc {
             best = row[0]*10;
         }
         return best;
-    }
-
-
-    @Deprecated
-    public static ResistorChain getChainFromRatio(double ratio, double totalRes, int group){
-        ResistorChain chain = new ResistorChain();
-        double tempRes = (ratio*totalRes/(ratio+1));
-        double actualRes = getBestResistance(tempRes,group);
-        chain = chain.add(actualRes);
-        tempRes = totalRes - actualRes;
-        chain = chain.add(getBestResistance(tempRes,group));
-        chain.calcResistanceDeviation(new double[]{(ratio*totalRes/(ratio+1)),(totalRes/(ratio+1))});
-        return chain;
-    }
-
-    @Deprecated
-    public static ObservableList<ResistorChain> removeDuplicates(ObservableList<ResistorChain> chainList) {
-        ObservableList<ResistorChain> uniqueList = FXCollections.observableArrayList();
-
-        uniqueList.add(chainList.get(0));
-        if (chainList.size() > 1) {
-            for (int i = 1; i < chainList.size(); i++) {
-                if (!uniqueList.contains(chainList.get(i))) {
-                    uniqueList.add(chainList.get(i));
-                }
-            }
-        }
-
-        return uniqueList;
     }
 }
