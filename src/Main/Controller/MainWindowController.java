@@ -29,6 +29,14 @@ public class MainWindowController {
 
     private HostServices hostServices;
 
+    @FXML
+    protected void initialize() {
+        OnAddResCalc();
+        OnAddRatioCalc();
+        OnAddCompHyst();
+        //tabPane.tabDragPolicy = TabPane.TabDragPolicy.REORDER;
+    }
+
     public void setMessage(String message) {
         messageLabel.setText(message);
     }
@@ -80,7 +88,7 @@ public class MainWindowController {
     }
 
     public void OnAddCompHyst() {
-        Tab newTab = new Tab("Resistance Ratio");
+        Tab newTab = new Tab("Comparator with Hystheresis");
         Node content = null;
         try {
             content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/CompHystCalculation.fxml"));

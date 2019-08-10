@@ -49,14 +49,6 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </TextField>
-        </HBox>
-        <Separator prefWidth="200.0" scaleY="2.0"/>
-        <Label minHeight="32.0" prefWidth="382.0" text="desired output voltages">
-            <VBox.margin>
-                <Insets left="15.0" right="5.0"/>
-            </VBox.margin>
-        </Label>
-        <HBox>
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </VBox.margin>
@@ -73,6 +65,12 @@
                 </HBox.margin>
             </Button>
         </HBox>
+        <Separator prefWidth="200.0" scaleY="2.0"/>
+        <Label minHeight="32.0" prefWidth="382.0" text="desired output voltages">
+            <VBox.margin>
+                <Insets left="15.0" right="5.0"/>
+            </VBox.margin>
+        </Label>
         <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" maxHeight="1.7976931348623157E308"
                    maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" VBox.vgrow="ALWAYS">
             <VBox.margin>

@@ -18,14 +18,7 @@
         </MenuBar>
     </top>
     <center>
-        <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
-            <Tab text="Resistance Chain">
-                <fx:include source="ResistanceCalculation.fxml"/>
-            </Tab>
-            <Tab text="Resistance Ratio">
-                <fx:include source="RatioCalculation.fxml"/>
-            </Tab>
-        </TabPane>
+        <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS"/>
     </center>
     <!--<bottom>
         <Label fx:id="messageLabel" BorderPane.alignment="CENTER_LEFT">
