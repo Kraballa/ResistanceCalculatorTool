@@ -20,6 +20,11 @@ I'll just have to wait for feedback on it.
 It displays all relevant informations to turn the calculated Resistance Chain into an actual circuit in a compact immediately understood way
 which is why I implemented it.
 
+UI tweaks include:
+- the colours used to visually represent a too large diversion from desired values in the detailed list is also used for that specific cell in the Resistance Chain list
+- tweaked margins for more consistency
+- the detailed view has its values rounded to a certain amount of decimal places. 10 for ampere, 4 for outputs, 2 for all ratios and total resistances
+
 ### (Previous) Update 1.0.3:
 This update features almost no visible changes. I've added a link to the GitHub repository and a detail view to the resistance ratio tool.
 

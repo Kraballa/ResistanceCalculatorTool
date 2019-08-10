@@ -95,7 +95,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
     private void displayInfo(ResistanceChain chain) {
         ObservableList<String> comparisons = FXCollections.observableArrayList();
 
-        double totalRes = Calc.roundWithComma(Calc.sumup(chain.getResistances()), 4);
+        double totalRes = Calc.roundWithComma(Calc.sumup(chain.getResistances()), 2);
         String totalResText = "total resistance:  " + totalRes + " Ω";
         if (chain.getVoltIn() != 0 && chain.getAmpere() != 0) {
             double optimalTotalRes = chain.getVoltIn() / chain.getAmpere();
@@ -191,8 +191,6 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
             displayInfo(newValue);
             if (Canvas != null) {
                 drawChainCanvas(newValue);
-            } else {
-                System.out.println("canvas null");
             }
         }
     }
