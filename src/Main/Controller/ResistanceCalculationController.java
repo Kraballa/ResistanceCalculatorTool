@@ -7,6 +7,7 @@ import Main.ResChainListPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -33,6 +34,8 @@ public class ResistanceCalculationController {
     ListView<ResistanceChain> chainList;
     @FXML
     ListView<String> detailList;
+    @FXML
+    Canvas canvas;
 
     private ResChainListPanel resListPanel;
 
@@ -76,7 +79,7 @@ public class ResistanceCalculationController {
         } else {
             resistorChains.addAll(ResistanceCalculator.calcResistanceChains(voltIn, voltOut, ampere, eSeries));
         }
-        resListPanel = new ResChainListPanel(chainList, detailList);
+        resListPanel = new ResChainListPanel(chainList, detailList, canvas);
         resListPanel.DisplayResistorList(resistorChains);
 
         System.out.println("calculated res-chains");

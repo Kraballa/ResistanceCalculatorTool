@@ -5,9 +5,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -22,14 +25,20 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
     private ListView<ResistanceChain> LeftPanel;
     private ListView<String> RightPanel;
+    private Canvas Canvas;
 
     private String warningStyle = "-fx-control-inner-background: #ffa1a1;";
     private String suboptimalStyle = "-fx-control-inner-background: #ffe0c7;";
     private String defaultStyle = "";
 
     public ResChainListPanel(ListView<ResistanceChain> list, ListView<String> text) {
+        this(list, text, null);
+    }
+
+    public ResChainListPanel(ListView<ResistanceChain> list, ListView<String> text, Canvas canvas) {
         LeftPanel = list;
         RightPanel = text;
+        Canvas = canvas;
     }
 
     /**
@@ -86,23 +95,28 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
     private void displayInfo(ResistanceChain chain) {
         ObservableList<String> comparisons = FXCollections.observableArrayList();
 
-        double totalRes = Calc.sumup(chain.getResistances());
-        String totalResText = "total resistance:  " + totalRes + "Ω";
+        double totalRes = Calc.roundWithComma(Calc.sumup(chain.getResistances()), 4);
+        String totalResText = "total resistance:  " + totalRes + " Ω";
         if (chain.getVoltIn() != 0 && chain.getAmpere() != 0) {
             double optimalTotalRes = chain.getVoltIn() / chain.getAmpere();
-            double ratio = 100 * totalRes / optimalTotalRes;
-            comparisons.add("total desired resistance: " + optimalTotalRes + "Ω");
+            double ratio = Calc.roundWithComma(100 * totalRes / optimalTotalRes, 4);
+            optimalTotalRes = Calc.roundWithComma(optimalTotalRes, 2);
+            comparisons.add("total desired resistance: " + optimalTotalRes + " Ω");
             totalResText += " (" + ratio + "%)";
         }
         comparisons.add(totalResText);
 
         if (chain.getAmpere() != 0) {
-            comparisons.add("optimal ampere: " + chain.getAmpere() + "A");
+            comparisons.add("optimal ampere: " + Calc.roundWithComma(chain.getAmpere(), 10) + " A");
             comparisons.add("");
 
             for (int i = 0; i < chain.getOptimalOutputs().length; i++) {
-                comparisons.add("desired: " + chain.getOptimalOutputs()[i] + "V, actual: " + chain.getOutputs()[i] + "V ("
-                        + (chain.getOptimalOutputs()[i] / chain.getOutputs()[i] * 100) + "%)");
+                double optOutput = Calc.roundWithComma(chain.getOptimalOutputs()[i], 4);
+                double actOutput = Calc.roundWithComma(chain.getOutputs()[i], 4);
+                double ratio = Calc.roundWithComma(100 * optOutput / actOutput, 2);
+                comparisons.add("desired: " + optOutput +
+                        " V, actual: " + actOutput
+                        + " V (" + ratio + "%)");
             }
 
             comparisons.add("");
@@ -122,10 +136,64 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         RightPanel.setItems(comparisons);
     }
 
+    /**
+     * Draws the input voltage (if it exists), the resistances and the outputs (if they exist) onto a canvas.
+     *
+     * @param chain the chain that should be drawn
+     */
+    private void drawChainCanvas(ResistanceChain chain) {
+        GraphicsContext gc = Canvas.getGraphicsContext2D();
+        gc.setFill(Color.grayRgb(244));
+        gc.fillRect(0, 0, Canvas.getWidth(), Canvas.getHeight());
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2);
+
+        int[] pos = new int[]{25, (int) Canvas.getHeight() / 2};
+        if (chain.getVoltIn() != 0) {
+            gc.setLineWidth(1);
+            gc.strokeText(Calc.roundWithComma(chain.getVoltIn(), 2) + " V", pos[0] + 5, pos[1] - 10);
+
+            gc.setLineWidth(2);
+            lineOffset(gc, pos, 20);
+        }
+
+        double[] outputs = chain.getOutputs();
+        for (int i = 0; i < chain.getResistances().length; i++) {
+            drawResistor(gc, (int) chain.getResistances()[i], pos);
+            gc.setLineWidth(1);
+            if (i < chain.getResistances().length - 1) {
+                gc.strokeText(Calc.roundWithComma(outputs[i], 2) + " V", pos[0] - 13, pos[1] - 10);
+            }
+            gc.setLineWidth(2);
+        }
+    }
+
+    private int[] drawResistor(GraphicsContext gc, int value, int[] pos) {
+        lineOffset(gc, pos, 20);
+        gc.strokeRect(pos[0], pos[1] - 8, 60, 16);
+        gc.setLineWidth(1);
+        gc.strokeText(value + " Ω", pos[0] + 8, pos[1] + 27);
+        gc.setLineWidth(2);
+        pos[0] += 60;
+        lineOffset(gc, pos, 20);
+        return pos;
+    }
+
+    private int[] lineOffset(GraphicsContext gc, int[] pos, int length) {
+        gc.strokeLine(pos[0], pos[1], pos[0] + length, pos[1]);
+        pos[0] += length;
+        return pos;
+    }
+
     @Override
     public void changed(ObservableValue<? extends ResistanceChain> observable, ResistanceChain oldValue, ResistanceChain newValue) {
         if (newValue != null) {
             displayInfo(newValue);
+            if (Canvas != null) {
+                drawChainCanvas(newValue);
+            } else {
+                System.out.println("canvas null");
+            }
         }
     }
 }
