@@ -106,7 +106,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
         }
         comparisons.add(totalResText);
 
-        if (chain.getAmpere() != 0) {
+        if (chain.getAmpere() != 0 && chain.getVoltIn() != 0) {
             comparisons.add("optimal ampere: " + Calc.roundWithComma(chain.getAmpere(), 10) + " A");
             comparisons.add("");
 
@@ -118,20 +118,25 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
                         " V, actual: " + actOutput
                         + " V (" + ratio + "%)");
             }
-
             comparisons.add("");
-            if (chain.getDeviation() >= 0.5) {
-                comparisons.add("Warning! extreme deviation");
-                RightPanel.setStyle(warningStyle);
-            } else if (chain.getDeviation() >= 0.08) {
-                comparisons.add("suboptimal deviation");
-                RightPanel.setStyle(suboptimalStyle);
-            } else {
-                RightPanel.setStyle(defaultStyle);
-            }
-
-            comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 6));
+        } else {
+            double[] resistances = chain.getResistances();
+            double ratio = resistances[0] / resistances[1] / chain.getRatio();
+            String ratioText = "actual ratio: " + Calc.roundWithComma(ratio * 100, 2) + "%";
+            comparisons.add(ratioText);
         }
+
+        if (chain.getDeviation() >= 0.5) {
+            comparisons.add("Warning! extreme deviation");
+            RightPanel.setStyle(warningStyle);
+        } else if (chain.getDeviation() >= 0.08) {
+            comparisons.add("suboptimal deviation");
+            RightPanel.setStyle(suboptimalStyle);
+        } else {
+            RightPanel.setStyle(defaultStyle);
+        }
+
+        comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 6));
 
         RightPanel.setItems(comparisons);
     }

@@ -89,15 +89,16 @@ public abstract class ResistanceCalculator {
         if (resRange.length == 1) {
             list.add(calcChainFromRatio(ratio, resRange[0], eSeries));
         } else if (resRange.length == 2) {
-            for (double i = resRange[0]; i <= resRange[1]; i += ((resRange[1] - resRange[0]) / 30)) {
+            for (double i = resRange[0]; i <= resRange[1]; i += ((resRange[1] - resRange[0]) / 1000)) {
                 ResistanceChain chain = calcChainFromRatio(ratio, i, eSeries);
                 if (!list.contains(chain)) {
+                    chain.setRatio(ratio);
                     list.add(chain);
                 }
             }
         }
-        //sorting doesn't work, there's no basis for comparison
-        return list; //new ArrayList<>(list.subList(0, Math.min(30, list.size())));
+        Collections.sort(list);
+        return new ArrayList<>(list.subList(0, Math.min(30, list.size())));
     }
 
     /**

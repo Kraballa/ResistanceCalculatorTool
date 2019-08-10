@@ -20,6 +20,8 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
     private double[] optimalOutputs;
     private double[] outputs;
 
+    private double ratio;
+
     private double ampere;
     private double voltIn;
     private double deviationCoefficient;
@@ -48,6 +50,10 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         this.voltIn = voltIn;
     }
 
+    public void setRatio(double ratio) {
+        this.ratio = ratio;
+    }
+
     private void calculateOutputs() {
         outputs = new double[resistances.size() - 1];
 
@@ -66,6 +72,10 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         return desired.stream().mapToDouble(i -> i).toArray();
     }
 
+    public double getRatio() {
+        return ratio;
+    }
+
     public double[] getOutputs() {
         calculateOutputs();
         return outputs;
@@ -76,7 +86,11 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
     }
 
     public double getDeviation() {
-        calculateDeviationCoefficient();
+        if (getAmpere() != 0 && getVoltIn() != 0) {
+            calcDeviationFromOutputs();
+        } else {
+            calcDeviationFromResistances();
+        }
         return deviationCoefficient;
     }
 
@@ -88,7 +102,20 @@ public class ResistanceChain implements Comparable<ResistanceChain> {
         return voltIn;
     }
 
-    private void calculateDeviationCoefficient() {
+    private void calcDeviationFromResistances() {
+        double[] resistances = getResistances();
+        double[] desired = getDesired();
+
+        double dev = 0;
+        for (int i = 0; i < resistances.length; i++) {
+            double curDeviation = resistances[i] - desired[i];
+            curDeviation = Math.pow(curDeviation / resistances[i], 2);
+            dev += curDeviation;
+        }
+        deviationCoefficient = Math.sqrt(dev);
+    }
+
+    private void calcDeviationFromOutputs() {
         if (resistances.size() != optimalOutputs.length + 1) {
             return;
         }
