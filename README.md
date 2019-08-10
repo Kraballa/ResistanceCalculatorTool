@@ -1,4 +1,4 @@
-# Resistance Calculator Tool v1.0.3
+# Resistance Calculator Tool v1.1
 
 ![Resistance Calculator Preview](res/ResCalcPreview.png "Resistance Chain Calculator displaying detailed information on a selected Resistance Chain") 
 
@@ -12,7 +12,15 @@ This tool can be used to calculate the most optimal resistor to get from an inpu
 Another function lets you calculate two resistors based on a ratio and a total resistance value.
 The goal is to provide a tool that solves this and many other similar mathematical problems in electrical engineering.
 
-## Update 1.0.3:
+## (Current) Update 1.1:
+New Update. Along with a few minor tweaks to the UI comes a new visualization of the Resistance Chains. 
+It shows input voltage and ampere, resistance values and for more comfortable use, the actual output inbetween them.
+I'm somewhat torn on its usefulness because it displays the same information that's already on screen, 
+I'll just have to wait for feedback on it. 
+It displays all relevant informations to turn the calculated Resistance Chain into an actual circuit in a compact immediately understood way
+which is why I implemented it.
+
+### (Previous) Update 1.0.3:
 This update features almost no visible changes. I've added a link to the GitHub repository and a detail view to the resistance ratio tool.
 
 *What this update* ***does*** *feature:*
@@ -31,6 +39,8 @@ For the future it will be exceptionally easy to expand this application with mor
 
 ### Future goals:
 
+- better described inputs
+- options for number of calculations
 - display the help image `res\ResCalcHelp.png`
 - check github if a new version is available
 - support multiple languages
