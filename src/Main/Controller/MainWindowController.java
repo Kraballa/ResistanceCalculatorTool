@@ -79,6 +79,18 @@ public class MainWindowController {
         }
     }
 
+    public void OnAddCompHyst() {
+        Tab newTab = new Tab("Resistance Ratio");
+        Node content = null;
+        try {
+            content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/CompHystCalculation.fxml"));
+            newTab.setContent(content);
+            tabPane.getTabs().add(newTab);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setHostServices(HostServices hostServices) {
         this.hostServices = hostServices;
     }

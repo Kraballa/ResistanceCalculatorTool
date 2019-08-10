@@ -21,6 +21,7 @@ It displays all relevant informations to turn the calculated Resistance Chain in
 which is why I implemented it.
 
 UI tweaks include:
+- added mnemonics. Press alt and the program will underline which key press opens which menu. For example, pressing `alt` then `n` opens the `New` menu and pressing `c` after that opens a new Resistance Chain Calculator Tab.
 - the colours used to visually represent a too large diversion from desired values in the detailed list is also used for that specific cell in the Resistance Chain list
 - tweaked margins for more consistency
 - the detailed view has its values rounded to a certain amount of decimal places. 10 for ampere, 4 for outputs, 2 for all ratios and total resistances

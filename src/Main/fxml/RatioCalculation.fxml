@@ -48,8 +48,8 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </ChoiceBox>
-            <Button minHeight="32.0" mnemonicParsing="false" onAction="#OnConfirmRatioCalculate" prefWidth="128.0"
-                    text="Calculate" HBox.hgrow="NEVER">
+            <Button minHeight="32.0" onAction="#OnConfirmRatioCalculate" prefWidth="128.0"
+                    text="_Calculate" HBox.hgrow="NEVER">
                 <HBox.margin>
                     <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>

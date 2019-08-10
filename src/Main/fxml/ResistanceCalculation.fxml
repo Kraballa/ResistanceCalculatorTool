@@ -66,8 +66,8 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </TextField>
-            <Button id="confirmOutput" minHeight="32.0" minWidth="-Infinity" mnemonicParsing="false"
-                    onAction="#OnConfirmCalculate" prefHeight="32.0" prefWidth="128.0" text="Calculate">
+            <Button id="confirmOutput" minHeight="32.0" minWidth="-Infinity"
+                    onAction="#OnConfirmCalculate" prefHeight="32.0" prefWidth="128.0" text="_Calculate">
                 <HBox.margin>
                     <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>

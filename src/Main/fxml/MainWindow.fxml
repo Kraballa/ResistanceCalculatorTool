@@ -6,18 +6,19 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller.MainWindowController">
     <top>
         <MenuBar>
-            <Menu mnemonicParsing="false" text="New">
-                <MenuItem mnemonicParsing="false" onAction="#OnAddResCalc" text="Add Resistance Chain Calculator"/>
-                <MenuItem mnemonicParsing="false" onAction="#OnAddRatioCalc" text="Add Resistance Ratio Calculator"/>
+            <Menu text="_New">
+                <MenuItem onAction="#OnAddResCalc" text="Resistance _Chain Calculator"/>
+                <MenuItem onAction="#OnAddRatioCalc" text="Resistance _Ratio Calculator"/>
+                <MenuItem onAction="#OnAddCompHyst" text="Comparator _Hystheresis Calculator"/>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-                <MenuItem mnemonicParsing="false" onAction="#OnViewGitHubRepo" text="View GitHub Repo"/>
-                <MenuItem mnemonicParsing="false" onAction="#OnOpenAbout" text="About"/>
+            <Menu text="_Help">
+                <MenuItem onAction="#OnViewGitHubRepo" text="View _GitHub Repo"/>
+                <MenuItem onAction="#OnOpenAbout" text="_About"/>
             </Menu>
         </MenuBar>
     </top>
     <center>
-        <TabPane tabClosingPolicy="ALL_TABS" fx:id="tabPane">
+        <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
             <Tab text="Resistance Chain">
                 <fx:include source="ResistanceCalculation.fxml"/>
             </Tab>
