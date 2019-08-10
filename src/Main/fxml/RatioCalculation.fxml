@@ -49,8 +49,8 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </ChoiceBox>
-            <Button minHeight="32.0" onAction="#OnConfirmRatioCalculate" prefWidth="128.0"
-                    text="_Calculate" HBox.hgrow="NEVER">
+            <Button minHeight="32.0" onAction="#OnConfirmRatioCalculate" prefWidth="128.0" text="_Calculate"
+                    HBox.hgrow="NEVER">
                 <HBox.margin>
                     <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>
@@ -63,9 +63,10 @@
                           AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0">
-                <ListView id="deviationList" fx:id="detailList" prefHeight="160.0" prefWidth="173.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="0.0"/>
+                <TextArea fx:id="detailArea" editable="false" maxHeight="1.7976931348623157E308"
+                          maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                          prefHeight="292.0" prefWidth="218.0" wrapText="true" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
         </SplitPane>
     </VBox>

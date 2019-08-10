@@ -76,9 +76,10 @@
                           AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0">
-                <ListView id="deviationList" fx:id="detailList" prefHeight="160.0" prefWidth="173.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="0.0"/>
+                <TextArea fx:id="detailArea" editable="false" wrapText="true" maxHeight="1.7976931348623157E308"
+                          maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                          prefHeight="292.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
         </SplitPane>
         <Canvas fx:id="canvas" height="100.0" width="1000" VBox.vgrow="ALWAYS">

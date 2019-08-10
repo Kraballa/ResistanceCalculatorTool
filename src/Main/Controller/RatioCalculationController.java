@@ -7,10 +7,7 @@ import Main.ResChainListPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 
 /*
  * Project by Vinzent Brömauer
@@ -30,7 +27,7 @@ public class RatioCalculationController {
     @FXML
     ListView<ResistanceChain> chainList;
     @FXML
-    ListView<String> detailList;
+    TextArea detailArea;
 
     private ResChainListPanel resListPanel;
 
@@ -56,7 +53,7 @@ public class RatioCalculationController {
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
         int eSeries = Integer.parseInt(this.eSeries.getValue().replaceAll("[^0123456789]", ""));
         resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, eSeries));
-        resListPanel = new ResChainListPanel(chainList, detailList);
+        resListPanel = new ResChainListPanel(chainList, detailArea);
         resListPanel.DisplayResistorList(resistorChains);
     }
 

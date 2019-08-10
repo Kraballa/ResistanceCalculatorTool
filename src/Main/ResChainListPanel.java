@@ -10,8 +10,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -24,18 +26,18 @@ import java.util.List;
 public class ResChainListPanel extends SplitPane implements ChangeListener<ResistanceChain> {
 
     private ListView<ResistanceChain> LeftPanel;
-    private ListView<String> RightPanel;
+    private TextArea RightPanel;
     private Canvas Canvas;
 
     private String warningStyle = "-fx-control-inner-background: #ffa1a1;";
     private String suboptimalStyle = "-fx-control-inner-background: #ffe0c7;";
     private String defaultStyle = "";
 
-    public ResChainListPanel(ListView<ResistanceChain> list, ListView<String> text) {
+    public ResChainListPanel(ListView<ResistanceChain> list, TextArea text) {
         this(list, text, null);
     }
 
-    public ResChainListPanel(ListView<ResistanceChain> list, ListView<String> text, Canvas canvas) {
+    public ResChainListPanel(ListView<ResistanceChain> list, TextArea text, Canvas canvas) {
         LeftPanel = list;
         RightPanel = text;
         Canvas = canvas;
@@ -93,7 +95,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
      * @param chain the chain that stores the information
      */
     private void displayInfo(ResistanceChain chain) {
-        ObservableList<String> comparisons = FXCollections.observableArrayList();
+        LinkedList<String> comparisons = new LinkedList<>();
 
         double totalRes = Calc.roundWithComma(Calc.sumup(chain.getResistances()), 2);
         String totalResText = "total resistance:  " + totalRes + " Ω";
@@ -138,7 +140,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
 
         comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 6));
 
-        RightPanel.setItems(comparisons);
+        RightPanel.setText(String.join("\n", comparisons));
     }
 
     /**
