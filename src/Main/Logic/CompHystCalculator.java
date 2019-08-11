@@ -13,7 +13,7 @@ public class CompHystCalculator {
         //STEP 1: Calculate all relevant values
         //Step 1.1
         double windowSize = uOutH - uOutL;
-        double windowAvg = uOutL + windowSize / 2;
+        double windowAvg = uOutL + windowSize * (u2high / u1);
         System.out.println("windowSize: " + windowSize + " windowAvg: " + windowAvg);
         //Step 1.2: approximate r1 and r2
         ResistanceChain resChain = ResistanceCalculator.calcResistanceChain(u1, new double[]{windowAvg}, ampere, eSeries);
@@ -43,7 +43,7 @@ public class CompHystCalculator {
 
                     CompHyst circuit = new CompHyst(u1, u2high, new double[]{r1variants[r1i], r2variants[r2i], r3variants[r3i]}, matrixSolution1);
                     circuit.setDeviation(deviation);
-                    circuit.setHighLow(calcOutH, calcOutL);
+                    circuit.setHighLow(calcOutH, calcOutL, uOutH, uOutL);
                     circuits.add(circuit);
 
                     //System.out.println("calcOutH = " + calcOutH + " calcOutL = " + calcOutL + " deviation = " + deviation + " matrix2: " + matrixSolution2[2]);

@@ -20,7 +20,7 @@ public class CompHystCalculatorTest {
 
     @Test
     void testCompHystRuntime() {
-        List<CompHyst> list = CompHystCalculator.calcCompHyst(10, 5, 2.5, 2, 0.01, 48, 60);
+        List<CompHyst> list = CompHystCalculator.calcCompHyst(10, 10, 2.5, 2, 0.01, 48, 60);
         CompHyst first = list.iterator().next();
 
         System.out.println(first.toString());

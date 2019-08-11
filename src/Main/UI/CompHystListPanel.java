@@ -1,5 +1,6 @@
 package Main.UI;
 
+import Main.Calc;
 import Main.Logic.CompHyst;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,7 +33,7 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
      *
      * @param resList list of resistances to display
      */
-    public void DisplayResistorList(List<CompHyst> resList) {
+    public void displayCompHyst(List<CompHyst> resList) {
         if (!LeftPanel.getSelectionModel().isEmpty()) {
             LeftPanel.getSelectionModel().selectedItemProperty().removeListener(this);
         }
@@ -75,7 +76,14 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
      */
     protected void displayInfo(CompHyst chain) {
         LinkedList<String> comparisons = new LinkedList<>();
-
+        double highRatio = Calc.roundWithComma(100 * chain.getuOutH() / chain.getuOutHD(), 4);
+        double lowRatio = Calc.roundWithComma(100 * chain.getuOutL() / chain.getuOutLD(), 4);
+        comparisons.add("desired high: " + chain.getuOutHD() + " V actual: " + Calc.roundWithComma(chain.getuOutH(), 6) + " V (" + highRatio + "%)");
+        comparisons.add("desired low: " + chain.getuOutLD() + " V actual: " + Calc.roundWithComma(chain.getuOutL(), 6) + " V (" + lowRatio + "%)");
+        comparisons.add("");
+        comparisons.add("current through voltage divider: " + chain.getAmps()[0]);
+        comparisons.add("");
+        comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 10));
 
         RightPanel.setText(String.join("\n", comparisons));
     }

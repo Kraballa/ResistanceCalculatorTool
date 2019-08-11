@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
-<VBox>
-    <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-                xmlns:fx="http://javafx.com/fxml/1">
-        <TextField layoutX="27.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0"/>
-        <TextField layoutX="119.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0"/>
-        <TextField layoutX="429.0" layoutY="50.0" prefHeight="25.0" prefWidth="72.0"/>
-        <TextField layoutX="429.0" layoutY="90.0" prefHeight="25.0" prefWidth="72.0"/>
-        <ChoiceBox layoutX="210.0" layoutY="37.0" prefHeight="25.0" prefWidth="47.0">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Main.Controller.ComparatorHystheresisController">
+    <AnchorPane prefHeight="300.0" prefWidth="600.0">
+        <TextField fx:id="ampere" layoutX="27.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0" text="0.01"/>
+        <TextField fx:id="u1" layoutX="119.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0" text="10"/>
+        <TextField fx:id="uOutH" layoutX="429.0" layoutY="50.0" prefHeight="25.0" prefWidth="72.0" text="2.5"/>
+        <TextField fx:id="uOutL" layoutX="429.0" layoutY="90.0" prefHeight="25.0" prefWidth="72.0" text="2"/>
+        <ChoiceBox fx:id="eSeries" layoutX="210.0" layoutY="37.0" prefHeight="25.0" prefWidth="47.0">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="e3"/>
@@ -25,26 +25,28 @@
                 </FXCollections>
             </items>
         </ChoiceBox>
-        <TextField layoutX="155.0" layoutY="175.0" prefHeight="25.0" prefWidth="72.0"/>
+        <TextField fx:id="u2high" layoutX="155.0" layoutY="175.0" prefHeight="25.0" prefWidth="72.0" text="10"/>
         <Text layoutX="43.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ampere"/>
         <Text layoutX="148.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="U1"/>
         <Text layoutX="514.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="uOutHigh"/>
         <Text layoutX="515.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="uOutLow"/>
         <Text layoutX="215.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="eSeries"/>
         <Text layoutX="172.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="u2High"/>
+        <Button fx:id="calculate" layoutX="433.0" layoutY="229.0" mnemonicParsing="false"
+                onAction="#OnCalculateCompHyst" text="Calculate"/>
+        <TextField fx:id="amount" layoutX="391.0" layoutY="175.0" text="40"/>
+        <Text layoutX="444.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"/>
     </AnchorPane>
     <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" VBox.vgrow="ALWAYS">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-            <ListView id="chainList" prefHeight="573.0" prefWidth="707.0"
-                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                      AnchorPane.topAnchor="0.0"/>
+            <ListView fx:id="compList" prefHeight="573.0" prefWidth="707.0" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0">
-            <TextArea editable="false" maxHeight="1.7976931348623157E308"
-                      maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
-                      prefHeight="292.0" prefWidth="218.0" wrapText="true" AnchorPane.bottomAnchor="0.0"
-                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <TextArea fx:id="detailArea" editable="false" maxHeight="1.7976931348623157E308"
+                      maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0"
+                      prefWidth="218.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
         </AnchorPane>
     </SplitPane>
 </VBox>
-

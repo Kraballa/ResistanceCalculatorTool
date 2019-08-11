@@ -51,8 +51,8 @@ public class RatioCalculationController {
         double[] resistBorder = InputCheck.parseDoubleArray(resistance.getText(), 2);
 
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
-        int eSeries = Integer.parseInt(this.eSeries.getValue().replaceAll("[^0123456789]", ""));
-        resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, eSeries));
+        int series = InputCheck.parseESeries(eSeries.getValue());
+        resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, series));
         resListPanel = new ResChainListPanel(chainList, detailArea);
         resListPanel.DisplayResistorList(resistorChains);
     }
