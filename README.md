@@ -50,6 +50,7 @@ For the future it will be exceptionally easy to expand this application with mor
 - better described inputs
 - SI scale units
 - options for number of calculations
+- rework ListPanels to be generic and move the detailed description methods to their originating classes
 - display the help image `res\ResCalcHelp.png`
 - check github if a new version is available
 - support multiple languages

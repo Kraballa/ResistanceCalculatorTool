@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Main.Controller.ComparatorHystheresisController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<VBox>
+    <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+                xmlns:fx="http://javafx.com/fxml/1">
+        <TextField layoutX="27.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0"/>
+        <TextField layoutX="119.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0"/>
+        <TextField layoutX="429.0" layoutY="50.0" prefHeight="25.0" prefWidth="72.0"/>
+        <TextField layoutX="429.0" layoutY="90.0" prefHeight="25.0" prefWidth="72.0"/>
+        <ChoiceBox layoutX="210.0" layoutY="37.0" prefHeight="25.0" prefWidth="47.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="e3"/>
+                    <String fx:value="e6"/>
+                    <String fx:value="e12"/>
+                    <String fx:value="e24"/>
+                    <String fx:value="e48"/>
+                    <String fx:value="e96"/>
+                    <String fx:value="e192"/>
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+        <TextField layoutX="155.0" layoutY="175.0" prefHeight="25.0" prefWidth="72.0"/>
+        <Text layoutX="43.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ampere"/>
+        <Text layoutX="148.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="U1"/>
+        <Text layoutX="514.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="uOutHigh"/>
+        <Text layoutX="515.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="uOutLow"/>
+        <Text layoutX="215.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="eSeries"/>
+        <Text layoutX="172.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="u2High"/>
+    </AnchorPane>
+    <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" VBox.vgrow="ALWAYS">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <ListView id="chainList" prefHeight="573.0" prefWidth="707.0"
+                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                      AnchorPane.topAnchor="0.0"/>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0">
+            <TextArea editable="false" maxHeight="1.7976931348623157E308"
+                      maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                      prefHeight="292.0" prefWidth="218.0" wrapText="true" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        </AnchorPane>
+    </SplitPane>
+</VBox>
 
-</AnchorPane>
