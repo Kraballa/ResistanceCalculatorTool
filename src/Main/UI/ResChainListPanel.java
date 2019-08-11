@@ -1,5 +1,6 @@
-package Main;
+package Main.UI;
 
+import Main.Calc;
 import Main.Logic.ResistanceChain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
@@ -23,7 +23,7 @@ import java.util.List;
  * This file is licensed under the GPL license Version 3.
  * See https://www.gnu.org/licenses/ for the full license.
  */
-public class ResChainListPanel extends SplitPane implements ChangeListener<ResistanceChain> {
+public class ResChainListPanel implements ChangeListener<ResistanceChain> {
 
     private ListView<ResistanceChain> LeftPanel;
     private TextArea RightPanel;
@@ -94,7 +94,7 @@ public class ResChainListPanel extends SplitPane implements ChangeListener<Resis
      *
      * @param chain the chain that stores the information
      */
-    private void displayInfo(ResistanceChain chain) {
+    protected void displayInfo(ResistanceChain chain) {
         LinkedList<String> comparisons = new LinkedList<>();
 
         double totalRes = Calc.roundWithComma(Calc.sumup(chain.getResistances()), 2);

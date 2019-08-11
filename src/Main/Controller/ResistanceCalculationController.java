@@ -3,7 +3,7 @@ package Main.Controller;
 import Main.InputCheck;
 import Main.Logic.ResistanceCalculator;
 import Main.Logic.ResistanceChain;
-import Main.ResChainListPanel;
+import Main.UI.ResChainListPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

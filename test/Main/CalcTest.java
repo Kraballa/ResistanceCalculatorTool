@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalcTest {
 
@@ -67,5 +67,14 @@ class CalcTest {
         assertEquals(1200,Calc.getBestResistance(1200,12),0.0001);
         assertEquals(2700,Calc.getBestResistance(2500,12),0.0001);
 
+    }
+
+    @Test
+    void getResAroundTest() {
+        String s = "";
+        for (double cur : Calc.getResistancesAround(1500, 48, 50)) {
+            s += Calc.roundWithComma(cur, 2) + " _ ";
+        }
+        System.out.println(s);
     }
 }

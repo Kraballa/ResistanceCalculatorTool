@@ -8,6 +8,8 @@ package Main;
  * See https://www.gnu.org/licenses/ for the full license.
  */
 
+import javafx.util.Pair;
+
 public abstract class Calc {
 
     private static double[] e3 = new double[]{1, 2.2, 4.7};
@@ -108,30 +110,88 @@ public abstract class Calc {
             return 0D;
         }
 
+        Pair<Integer, Integer> pair = getIndexOfClosestResistance(optimum, group);
+        double[] series = getESeries(group);
+        return series[pair.getKey()] * pair.getValue();
+    }
+
+    public static double[] getResistancesAround(double around, int eSeries, int amount) {
+        double[] resistances = new double[amount];
+        Pair<Integer, Integer> pair = getIndexOfClosestResistance(around, eSeries);
+        int aroundIndex = pair.getKey();
+        double[] series = getESeries(eSeries);
+
+        for (int i = 0; i < resistances.length; i++) {
+            int index = aroundIndex - amount / 2 + i;
+            int decade = pair.getValue();
+
+            while (index < 0) {
+                if (decade >= 10) {
+                    decade /= 10;
+                    index += series.length;
+                } else {
+                    index = 0;
+                }
+            }
+
+            while (index > series.length - 1) {
+                if (decade < 10000) {
+                    decade *= 10;
+                    index -= series.length;
+                } else {
+                    index = series.length - 1;
+                }
+            }
+
+            resistances[i] = series[index] * decade;
+        }
+
+        return resistances;
+    }
+
+    private static double[] getESeries(int series) {
+        switch (series) {
+            case 6:
+                return e6;
+            case 12:
+                return e12;
+            case 24:
+                return e24;
+            case 48:
+                return e48;
+            case 96:
+                return e96;
+            case 192:
+                return e192;
+            default:
+                return e3;
+        }
+    }
+
+    private static int getDecadeScale(double resistance) {
         //calculate the decade and limit the resistance to [1.0,100000)
         int decade = 1;
-        while(decade < 10000 && optimum / decade >= 10){
+        while (decade < 10000 && resistance / decade >= 10) {
             decade *= 10;
         }
-        double[] row;
-        switch(group){
-            case 6: row = e6; break;
-            case 12: row = e12; break;
-            case 24: row = e24; break;
-            case 48: row = e48; break;
-            case 96: row = e96; break;
-            case 192: row = e192; break;
-            default: row = e3;
-        }
-        double best = row[0]*decade;
-        for (double aRow : row) {
-            if (Math.abs(optimum - best) > Math.abs(optimum - aRow*decade)) {
-                best = aRow*decade;
+        return decade;
+    }
+
+    private static Pair<Integer, Integer> getIndexOfClosestResistance(double optimum, int eSeries) {
+        int decade = getDecadeScale(optimum);
+        double[] row = getESeries(eSeries);
+
+        int best = 0;
+        for (int i = 0; i < row.length; i++) {
+            if (Math.abs(optimum - row[best] * decade) > Math.abs(optimum - row[i] * decade)) {
+                best = i;
             }
         }
-        if (Math.abs(optimum - best) > Math.abs(optimum - row[0]*10) && decade < 1000) {
-            best = row[0]*10;
+        //checks if the zeroth value of the next decade is closer than the last value of the current one
+        if (Math.abs(optimum - row[best] * decade) > Math.abs(optimum - row[0] * 10) && decade < 1000) {
+            best = 0;
+            decade++;
         }
-        return best;
+        return new Pair<Integer, Integer>(best, decade);
     }
 }

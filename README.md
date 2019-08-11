@@ -25,6 +25,7 @@ UI tweaks include:
 - the colours used to visually represent a too large diversion from desired values in the detailed list is also used for that specific cell in the Resistance Chain list
 - tweaked ui element margins for more consistency
 - added more details to the ratio calculator panel
+- the detailed view is now a TextArea, which allows copying its contents
 - the detailed view has its values rounded to a certain amount of decimal places. 10 for ampere, 4 for outputs, 2 for all ratios and total resistances
 
 ### (Previous) Update 1.0.3:
@@ -48,7 +49,6 @@ For the future it will be exceptionally easy to expand this application with mor
 
 - better described inputs
 - SI scale units
-- detailed info panel to TextArea
 - options for number of calculations
 - display the help image `res\ResCalcHelp.png`
 - check github if a new version is available
