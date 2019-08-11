@@ -22,6 +22,20 @@ public class CompHyst implements Comparable<CompHyst> {
         return deviation;
     }
 
+    public void setHighLow(double high, double low) {
+        uOutH = high;
+        uOutL = low;
+    }
+
+    public double[] getResistances() {
+        return resistances;
+    }
+
+    @Override
+    public String toString() {
+        return "uOutH = " + uOutH + " uOutL = " + uOutL;
+    }
+
     @Override
     public int compareTo(CompHyst o) {
         return Double.compare(this.getDeviation(), o.getDeviation());
