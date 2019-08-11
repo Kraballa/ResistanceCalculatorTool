@@ -192,6 +192,6 @@ public abstract class Calc {
             best = 0;
             decade++;
         }
-        return new Pair<Integer, Integer>(best, decade);
+        return new Pair<>(best, decade);
     }
 }
