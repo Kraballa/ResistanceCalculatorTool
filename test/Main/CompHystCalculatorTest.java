@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class CompHystCalculatorTest {
+class CompHystCalculatorTest {
     @Test
     void testMatrixCalc() {
         double[] res = CompHystCalculator.solveForAmpere(1000, 200, 50000, 10, 10);

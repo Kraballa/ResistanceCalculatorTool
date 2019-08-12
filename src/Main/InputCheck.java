@@ -1,5 +1,9 @@
 package Main;
 
+import javafx.scene.control.TextField;
+
+import java.util.IllegalFormatException;
+
 /*
  * Project by Vinzent Brömauer
  * vinz.corno@web.de
@@ -9,67 +13,102 @@ package Main;
  */
 public abstract class InputCheck {
 
-    public static boolean checkVoltIn(double voltIn, double[] voltOut) {
-        if (voltIn <= 0) {
-            System.out.println("voltIn <= 0");
-            return false;
-        } else {
-            for (double aVoltOut : voltOut) {
-                if (voltIn < aVoltOut) {
-                    System.out.println("voltIn (" + voltIn + ") is not bigger than atleast one voltOut(" + aVoltOut + ")");
-                    return false;
-                }
-            }
+    private static String errorStyle = "-fx-control-inner-background: #FF4136;";
+    private static String defaultStyle = "";
+
+    public static double parseDoubleGreaterZero(TextField field) {
+        try {
+            double value = parseDoubleGreaterZero(field.getText().trim());
+            field.setStyle(defaultStyle);
+            return value;
+        } catch (NumberFormatException e) {
+            field.setStyle(errorStyle);
+            throw e;
+        } catch (IllegalArgumentException e) {
+            field.setStyle(errorStyle);
+            throw e;
         }
-        return true;
     }
 
-    public static double parseVoltIn(String voltIn) {
-        return parseDoubleArray(voltIn, 1)[0];
-    }
-
-    public static boolean checkVoltOut(double[] voltOut) {
-        for (double aVoltOut : voltOut) {
-            if (aVoltOut < 0) {
-                System.out.println("voltOut cannot have values < 0");
-                return false;
-            }
+    public static double parseDoubleGreaterZero(String value) throws NumberFormatException, IllegalFormatException {
+        double ret = Double.parseDouble(value.trim());
+        if (ret <= 0) {
+            throw new IllegalArgumentException("value can't be <= zero");
         }
-        return true;
+        return ret;
     }
 
-    public static double[] parseVoltOut(String voltOut) {
-        return parseDoubleArray(voltOut, 0);
-    }
-
-    public static boolean checkAmpere(double[] ampere) {
-        for (double anAmpere : ampere) {
-            if (anAmpere <= 0) {
-                System.out.println("ampere cannot have values < 0");
-                return false;
-            }
+    public static int parseIntGreaterZero(TextField field) {
+        try {
+            int value = parseIntGreaterZero(field.getText().trim());
+            field.setStyle(defaultStyle);
+            return value;
+        } catch (NumberFormatException e) {
+            field.setStyle(errorStyle);
+            throw e;
+        } catch (IllegalArgumentException e) {
+            field.setStyle(errorStyle);
+            throw e;
         }
-        return true;
     }
 
-    public static double[] parseAmpere(String ampere) {
-        return parseDoubleArray(ampere, 2);
+    public static int parseIntGreaterZero(String value) throws NumberFormatException, IllegalFormatException {
+        int ret = Integer.parseInt(value.trim());
+        if (ret <= 0) {
+            throw new IllegalArgumentException("value can't be <= zero");
+        }
+        return ret;
     }
 
     public static int parseESeries(String input) {
-        return Integer.parseInt(input.replaceAll("[^0123456789]", ""));
+        int series = Integer.parseInt(input.trim().substring(1));
+        switch (series) {
+            case 3:
+            case 6:
+            case 12:
+            case 24:
+            case 48:
+            case 96:
+            case 192:
+                return series;
+            default:
+                throw new IllegalArgumentException("input not an e series identifier");
+        }
     }
 
-    public static double[] parseDoubleArray(String string, int length) throws NumberFormatException {
-        //string = string.replaceAll("[^0123456789.,]", " ");
+    public static double[] parseDoubleArray(TextField field) {
+        return parseDoubleArray(field, 0);
+    }
+
+    public static double[] parseDoubleArray(TextField field, int numValues) {
+        try {
+            double[] value = parseDoubleArray(field.getText().trim(), numValues);
+            field.setStyle(defaultStyle);
+            return value;
+        } catch (NumberFormatException e) {
+            field.setStyle(errorStyle);
+            throw e;
+        } catch (IllegalArgumentException e) {
+            field.setStyle(errorStyle);
+            throw e;
+        }
+    }
+
+    public static double[] parseDoubleArray(String string) throws NumberFormatException, IllegalFormatException {
+        return parseDoubleArray(string, 0);
+    }
+
+    @SuppressWarnings("UnusedAssignment")
+    public static double[] parseDoubleArray(String string, int length) throws NumberFormatException, IllegalFormatException {
         string = string.replaceAll(",", ".");
-        int actualLength = length;
         String[] split = string.trim().split("[ ]+");
         double[] ret = new double[split.length];
-        if (length <= 0) {
-            actualLength = ret.length;
+        if (length == 0) {
+            length = split.length;
+        } else if (length != split.length) {
+            throw new IllegalArgumentException(length + " values expected, but got " + split.length);
         }
-        for (int i = 0; i < Math.min(ret.length, actualLength); i++) {
+        for (int i = 0; i < split.length; i++) {
             ret[i] = Double.parseDouble(split[i]);
         }
         return ret;

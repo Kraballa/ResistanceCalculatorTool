@@ -23,9 +23,9 @@ import java.io.IOException;
 public class MainWindowController {
 
     @FXML
-    Label messageLabel;
+    private Label messageLabel;
     @FXML
-    TabPane tabPane;
+    private TabPane tabPane;
 
     private HostServices hostServices;
 
@@ -53,6 +53,7 @@ public class MainWindowController {
     public void OnOpenAbout() {
         Parent root;
         try {
+            //noinspection ConstantConditions
             root = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/About.fxml"));
             Stage stage = new Stage();
             stage.setTitle("About");
@@ -65,7 +66,7 @@ public class MainWindowController {
 
     public void OnAddResCalc() {
         Tab newTab = new Tab("Resistance Chain");
-        Node content = null;
+        Node content;
         try {
             content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/ResistanceCalculation.fxml"));
             newTab.setContent(content);
@@ -77,7 +78,7 @@ public class MainWindowController {
 
     public void OnAddRatioCalc() {
         Tab newTab = new Tab("Resistance Ratio");
-        Node content = null;
+        Node content;
         try {
             content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/RatioCalculation.fxml"));
             newTab.setContent(content);
@@ -89,7 +90,7 @@ public class MainWindowController {
 
     public void OnAddCompHyst() {
         Tab newTab = new Tab("Comparator with Hystheresis");
-        Node content = null;
+        Node content;
         try {
             content = FXMLLoader.load(getClass().getClassLoader().getResource("Main/fxml/CompHystCalculation.fxml"));
             newTab.setContent(content);

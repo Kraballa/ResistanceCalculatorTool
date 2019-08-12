@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class ResistanceChainTest {
 
-    ResistanceChain chain;
+    private ResistanceChain chain;
 
     @BeforeEach
     void setUp() {

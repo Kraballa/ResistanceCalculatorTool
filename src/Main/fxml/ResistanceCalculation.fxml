@@ -30,7 +30,7 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </TextField>
-            <ChoiceBox id="groupSelector" fx:id="choiceGroup" blendMode="DARKEN" maxHeight="-Infinity"
+            <ChoiceBox id="groupSelector" fx:id="eSeries" blendMode="DARKEN" maxHeight="-Infinity"
                        maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" HBox.hgrow="NEVER">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

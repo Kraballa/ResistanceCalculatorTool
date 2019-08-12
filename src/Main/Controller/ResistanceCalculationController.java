@@ -19,12 +19,14 @@ import javafx.scene.control.*;
  */
 public class ResistanceCalculationController {
 
+    private ResChainListPanel resListPanel;
+
     @FXML
     private TextField outputVoltages;
     @FXML
     private TextField inputVoltage;
     @FXML
-    private ChoiceBox<String> choiceGroup;
+    private ChoiceBox<String> eSeries;
     @FXML
     private TextField current;
     @FXML
@@ -34,86 +36,45 @@ public class ResistanceCalculationController {
     @FXML
     Canvas canvas;
 
-    private ResChainListPanel resListPanel;
-
-    private String errorStyle = "-fx-control-inner-background: #FF4136;";
-    private String defaultStyle = "";
-
     @FXML
     public void initialize() {
-        //choiceGroup.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
-        choiceGroup.setValue("e96");
+        eSeries.setValue("e96");
 
         outputVoltages.setTooltip(new Tooltip("desired output voltages"));
         inputVoltage.setTooltip(new Tooltip("input voltage"));
+        eSeries.setTooltip(new Tooltip("e series to look in for available resistors"));
         current.setTooltip(new Tooltip("one or two amp values"));
-        choiceGroup.setTooltip(new Tooltip("e series"));
+
+        resListPanel = new ResChainListPanel(chainList, detailArea, canvas);
     }
 
     public void OnConfirmCalculate() {
-        if (!inputExists()) {
-            return;
-        }
-
         double voltIn;
         double[] voltOut;
         double[] ampere;
         int eSeries;
 
-        //parse input
         try {
-            voltIn = InputCheck.parseVoltIn(inputVoltage.getText());
-            voltOut = InputCheck.parseVoltOut(outputVoltages.getText());
-            ampere = InputCheck.parseAmpere(current.getText());
-            eSeries = InputCheck.parseESeries(choiceGroup.getValue());
-        } catch (NumberFormatException nfe) {
-            System.out.println("could not parse inputs");
+            voltIn = InputCheck.parseDoubleGreaterZero(inputVoltage);
+            voltOut = InputCheck.parseDoubleArray(outputVoltages);
+            ampere = InputCheck.parseDoubleArray(current);
+            eSeries = InputCheck.parseESeries(this.eSeries.getValue());
+        } catch (NumberFormatException e) {
+            System.out.println("one or more inputs are not numbers");
+            e.printStackTrace();
+            return;
+        } catch (IllegalArgumentException e) {
+            System.out.println("one or more inputs doesn't match the expected values");
+            e.printStackTrace();
             return;
         }
-        System.out.println("parsed input");
-
-        if (!(InputCheck.checkAmpere(ampere) && InputCheck.checkVoltOut(voltOut) && InputCheck.checkVoltIn(voltIn, voltOut))) {
-            return;
-        }
-
-        System.out.println("inputs okay");
 
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
-
         if (ampere.length == 1) {
             resistorChains.add(ResistanceCalculator.calcResistanceChain(voltIn, voltOut, ampere[0], eSeries));
         } else {
             resistorChains.addAll(ResistanceCalculator.calcResistanceChains(voltIn, voltOut, ampere, eSeries));
         }
-        resListPanel = new ResChainListPanel(chainList, detailArea, canvas);
         resListPanel.DisplayResistorList(resistorChains);
-
-        System.out.println("calculated res-chains");
-    }
-
-    private boolean inputExists() {
-        boolean ret = true;
-
-        if (inputVoltage.getText().trim().equals("")) {
-            inputVoltage.setStyle(errorStyle);
-            ret = false;
-        } else {
-            inputVoltage.setStyle(defaultStyle);
-        }
-
-        if (outputVoltages.getText().trim().equals("")) {
-            outputVoltages.setStyle(errorStyle);
-            ret = false;
-        } else {
-            outputVoltages.setStyle(defaultStyle);
-        }
-
-        if (current.getText().trim().equals("")) {
-            current.setStyle(errorStyle);
-            ret = false;
-        } else {
-            current.setStyle(defaultStyle);
-        }
-        return ret;
     }
 }

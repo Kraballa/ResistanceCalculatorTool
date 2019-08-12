@@ -71,9 +71,9 @@ class CalcTest {
 
     @Test
     void getResAroundTest() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (double cur : Calc.getResistancesAround(1500, 96, 100)) {
-            s += Calc.roundWithComma(cur, 2) + "_";
+            s.append(Calc.roundWithComma(cur, 2)).append("_");
         }
         System.out.println(s);
     }

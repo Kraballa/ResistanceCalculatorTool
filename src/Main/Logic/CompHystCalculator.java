@@ -31,22 +31,22 @@ public class CompHystCalculator {
         double[] r3variants = Calc.getResistancesAround(res[2], eSeries, range);
 
         //Step 2.1: calculate their proposed ampere values and their quadratic distance from the desired values
-        for (int r1i = 0; r1i < r1variants.length; r1i++) {
-            for (int r2i = 0; r2i < r2variants.length; r2i++) {
-                for (int r3i = 0; r3i < r3variants.length; r3i++) {
-                    double[] matrixSolution1 = solveForAmpere(r1variants[r1i], r2variants[r2i], r3variants[r3i], u1, u2high);
-                    double[] matrixSolution2 = solveForAmpere(r1variants[r1i], r2variants[r2i], r3variants[r3i], u1, 0);
+        for (double r1variant : r1variants) {
+            for (double r2variant : r2variants) {
+                for (double r3variant : r3variants) {
 
-                    double calcOutH = matrixSolution1[1] * r2variants[r2i];
-                    double calcOutL = matrixSolution2[1] * r2variants[r2i];
+
+                    double[] matrixSolution1 = solveForAmpere(r1variant, r2variant, r3variant, u1, u2high);
+                    double[] matrixSolution2 = solveForAmpere(r1variant, r2variant, r3variant, u1, 0);
+
+                    double calcOutH = matrixSolution1[1] * r2variant;
+                    double calcOutL = matrixSolution2[1] * r2variant;
                     double deviation = Math.sqrt(Math.pow(calcOutH - uOutH, 2) + Math.pow(calcOutL - uOutL, 2));
 
-                    CompHyst circuit = new CompHyst(u1, u2high, new double[]{r1variants[r1i], r2variants[r2i], r3variants[r3i]}, matrixSolution1);
+                    CompHyst circuit = new CompHyst(u1, u2high, new double[]{r1variant, r2variant, r3variant}, matrixSolution1);
                     circuit.setDeviation(deviation);
                     circuit.setHighLow(calcOutH, calcOutL, uOutH, uOutL);
                     circuits.add(circuit);
-
-                    //System.out.println("calcOutH = " + calcOutH + " calcOutL = " + calcOutL + " deviation = " + deviation + " matrix2: " + matrixSolution2[2]);
                 }
             }
         }

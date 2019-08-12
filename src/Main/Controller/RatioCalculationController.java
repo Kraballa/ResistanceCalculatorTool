@@ -18,6 +18,8 @@ import javafx.scene.control.*;
  */
 public class RatioCalculationController {
 
+    private ResChainListPanel resListPanel;
+
     @FXML
     TextField ratio;
     @FXML
@@ -29,50 +31,37 @@ public class RatioCalculationController {
     @FXML
     TextArea detailArea;
 
-    private ResChainListPanel resListPanel;
-
-    private String errorStyle = "-fx-control-inner-background: #FF4136;";
-    private String defaultStyle = "";
-
     @FXML
     public void initialize() {
-        //eSeries.setItems(FXCollections.observableArrayList("e3", "e6", "e12", "e24", "e48", "e96", "e192"));
         eSeries.setValue("e96");
 
-        eSeries.setTooltip(new Tooltip("e series"));
+        ratio.setTooltip(new Tooltip("the ratio between the first and second resistor"));
+        resistance.setTooltip(new Tooltip("the combined resistance of the two resistors"));
+        eSeries.setTooltip(new Tooltip("e series to look in for available resistors"));
+
+        resListPanel = new ResChainListPanel(chainList, detailArea);
     }
 
     public void OnConfirmRatioCalculate() {
-        if (!inputExists()) {
+        double parsedRatio;
+        double[] resistBorder;
+        int eSeries;
+
+        try {
+            parsedRatio = InputCheck.parseDoubleGreaterZero(ratio);
+            resistBorder = InputCheck.parseDoubleArray(resistance, 2);
+            eSeries = InputCheck.parseESeries(this.eSeries.getValue());
+        } catch (NumberFormatException e) {
+            System.out.println("one or more inputs are not numbers");
+            e.printStackTrace();
+            return;
+        } catch (IllegalArgumentException e) {
+            System.out.println("one or more inputs doesn't match the expected values");
+            e.printStackTrace();
             return;
         }
-
-        double parsedRatio = InputCheck.parseDoubleArray(ratio.getText(), 1)[0];
-        double[] resistBorder = InputCheck.parseDoubleArray(resistance.getText(), 2);
-
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
-        int series = InputCheck.parseESeries(eSeries.getValue());
-        resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, series));
-        resListPanel = new ResChainListPanel(chainList, detailArea);
+        resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, eSeries));
         resListPanel.DisplayResistorList(resistorChains);
-    }
-
-    private boolean inputExists() {
-        boolean ret = true;
-        if (ratio.getText().trim().equals("")) {
-            ratio.setStyle(errorStyle);
-            ret = false;
-        } else {
-            ratio.setStyle(defaultStyle);
-        }
-
-        if (resistance.getText().trim().equals("")) {
-            resistance.setStyle(errorStyle);
-            ret = false;
-        } else {
-            resistance.setStyle(defaultStyle);
-        }
-
-        return ret;
     }
 }
