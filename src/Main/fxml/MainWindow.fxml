@@ -9,7 +9,7 @@
             <Menu text="_New">
                 <MenuItem onAction="#OnAddResCalc" text="Resistance _Chain Calculator"/>
                 <MenuItem onAction="#OnAddRatioCalc" text="Resistance _Ratio Calculator"/>
-                <MenuItem onAction="#OnAddCompHyst" text="Comparator _Hystheresis Calculator"/>
+                <MenuItem onAction="#OnAddCompHyst" text="C_omparator Hystheresis Calculator"/>
             </Menu>
             <Menu text="_Help">
                 <MenuItem onAction="#OnViewGitHubRepo" text="View _GitHub Repo"/>
