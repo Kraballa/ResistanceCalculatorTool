@@ -13,8 +13,8 @@ import java.util.IllegalFormatException;
  */
 public abstract class InputCheck {
 
-    private static String errorStyle = "-fx-control-inner-background: #FF4136;";
-    private static String defaultStyle = "";
+    private static final String errorStyle = "-fx-control-inner-background: #FF4136;";
+    private static final String defaultStyle = "";
 
     public static double parseDoubleGreaterZero(TextField field) {
         try {
@@ -31,7 +31,13 @@ public abstract class InputCheck {
     }
 
     public static double parseDoubleGreaterZero(String value) throws NumberFormatException, IllegalFormatException {
-        double ret = Double.parseDouble(value.trim());
+        value = value.trim();
+        double multiplier = getMultiplier(value.charAt(value.length() - 1));
+        if (multiplier != 1) {
+            value = value.substring(0, value.length() - 1);
+        }
+
+        double ret = Double.parseDouble(value) * multiplier;
         if (ret <= 0) {
             throw new IllegalArgumentException("value can't be <= zero");
         }
@@ -53,7 +59,13 @@ public abstract class InputCheck {
     }
 
     public static int parseIntGreaterZero(String value) throws NumberFormatException, IllegalFormatException {
-        int ret = Integer.parseInt(value.trim());
+        value = value.trim();
+        double multiplier = getMultiplier(value.charAt(value.length() - 1));
+        if (multiplier != 1) {
+            value = value.substring(0, value.length() - 1);
+        }
+
+        int ret = (int) Math.round(Double.parseDouble(value) * multiplier);
         if (ret <= 0) {
             throw new IllegalArgumentException("value can't be <= zero");
         }
@@ -109,8 +121,24 @@ public abstract class InputCheck {
             throw new IllegalArgumentException(length + " values expected, but got " + split.length);
         }
         for (int i = 0; i < split.length; i++) {
-            ret[i] = Double.parseDouble(split[i]);
+            ret[i] = parseDoubleGreaterZero(split[i]);
         }
         return ret;
+    }
+
+    private static double getMultiplier(char lastChar) {
+        switch (lastChar) {
+            case 'M':
+                return 1000000;
+            case 'k':
+                return 1000;
+            default:
+                return 1;
+            case 'm':
+                return 0.001;
+            case 'μ':
+                return 0.000001;
+
+        }
     }
 }

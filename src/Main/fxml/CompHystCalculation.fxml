@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="Main.Controller.ComparatorHystheresisController">
+    <padding>
+        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+    </padding>
     <AnchorPane prefHeight="300.0" prefWidth="600.0">
-        <TextField fx:id="ampere" layoutX="27.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0" text="0.01"/>
+        <TextField fx:id="ampere" layoutX="27.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0" text="1m"/>
         <TextField fx:id="u1" layoutX="119.0" layoutY="37.0" prefHeight="25.0" prefWidth="72.0" text="10"/>
         <TextField fx:id="uOutH" layoutX="429.0" layoutY="50.0" prefHeight="25.0" prefWidth="72.0" text="2.5"/>
         <TextField fx:id="uOutL" layoutX="429.0" layoutY="90.0" prefHeight="25.0" prefWidth="72.0" text="2"/>
@@ -32,8 +36,8 @@
         <Text layoutX="515.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="uOutLow"/>
         <Text layoutX="215.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="eSeries"/>
         <Text layoutX="172.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="u2High"/>
-        <Button layoutX="433.0" layoutY="229.0" mnemonicParsing="false"
-                onAction="#OnCalculateCompHyst" text="Calculate"/>
+        <Button layoutX="433.0" layoutY="229.0" mnemonicParsing="false" onAction="#OnCalculateCompHyst"
+                text="Calculate"/>
         <TextField fx:id="amount" layoutX="391.0" layoutY="175.0" text="60"/>
         <Text layoutX="444.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"/>
     </AnchorPane>

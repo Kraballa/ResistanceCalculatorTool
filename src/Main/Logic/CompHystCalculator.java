@@ -3,7 +3,6 @@ package Main.Logic;
 import Main.Calc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,15 +12,17 @@ public class CompHystCalculator {
         //STEP 1: Calculate all relevant values
         //Step 1.1
         double windowSize = uOutH - uOutL;
+
+        /* This approximation is inaccurate. Because of it the user has to set the range parameter to atleast 40 to get good results
+         * When I figure out what the actual average is one does not have to calculate so many variants.
+         */
         double windowAvg = uOutL + windowSize * (u2high / u1);
-        System.out.println("windowSize: " + windowSize + " windowAvg: " + windowAvg);
+
         //Step 1.2: approximate r1 and r2
         ResistanceChain resChain = ResistanceCalculator.calcResistanceChain(u1, new double[]{windowAvg}, ampere, eSeries);
         //Step 1.3: calculate r3
         double[] res = new double[]{resChain.getResistances()[0], resChain.getResistances()[1], 0};
         res[2] = (res[0] * (u1 - windowAvg)) / windowSize;
-
-        System.out.println(Arrays.toString(res));
 
         //STEP 2: extrapolate calculated values
         List<CompHyst> circuits = new ArrayList<>();

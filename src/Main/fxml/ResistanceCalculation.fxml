@@ -44,7 +44,7 @@
                     </FXCollections>
                 </items>
             </ChoiceBox>
-            <TextField fx:id="current" minHeight="32.0" prefHeight="32.0" promptText="ampere range" text="0.001 0.002">
+            <TextField fx:id="current" minHeight="32.0" prefHeight="32.0" promptText="ampere range" text="1m 2m">
                 <HBox.margin>
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
@@ -67,9 +67,6 @@
         </HBox>
         <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" maxHeight="1.7976931348623157E308"
                    maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" VBox.vgrow="ALWAYS">
-            <VBox.margin>
-                <Insets/>
-            </VBox.margin>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                 <ListView id="chainList" fx:id="chainList" prefHeight="573.0" prefWidth="707.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"

@@ -30,7 +30,7 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </Label>
-            <TextField fx:id="resistance" minHeight="32.0" prefHeight="32.0" prefWidth="228.0" text="20000 60000"
+            <TextField fx:id="resistance" minHeight="32.0" prefHeight="32.0" prefWidth="228.0" text="20k 60k"
                        HBox.hgrow="ALWAYS"/>
             <ChoiceBox id="groupSelector" fx:id="eSeries" blendMode="DARKEN" maxHeight="-Infinity"
                        maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" HBox.hgrow="NEVER">
