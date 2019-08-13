@@ -10,10 +10,17 @@ For email contact you can reach me at `vinz.corno@web.de`.**
 
 This tool can be used to calculate the most optimal resistor to get from an input voltage to one or more output voltages.
 Another function lets you calculate two resistors based on a ratio and a total resistance value.
+The third calculation technique determines 3 resistance values to get the desired thresholds on an inverted comparator with hystheresis.
 The goal is to provide a tool that solves this and many other similar mathematical problems in electrical engineering.
 
 ## (Current) Update 1.1:
-New Update. Along with a few minor tweaks to the UI comes a new visualization of the Resistance Chains. 
+New Update. The big part is a new type of calculation that deals with inverted comparators with hystheresis. The calculation process is long and sort of expensive.
+After an initial approximation values around those guesses are selected, in 3 dimensions. In the UI the TextArea titled "amount" corresponds to the amount of values that are picked for each dimension,
+meaning if it's set too high it will just take minutes and finally crash. With the tested inputs there were no improvements of the answers after 80 and past 100 the calculation took way too long (100^3 = 1.000.000 times a bunch of maths).
+For now the suggested value is the default, 60. Expect improvements in the future. 
+I'm especially looking into one value that could potentially increase the accuracy of the guess by a few hundred percent. Enough of that though.
+
+Along with a few major and minor tweaks to the UI comes a new visualization of the Resistance Chains. 
 It shows input voltage and ampere, resistance values and for more comfortable use, the actual output inbetween them.
 I'm somewhat torn on its usefulness because it displays the same information that's already on screen, 
 I'll just have to wait for feedback on it. 
@@ -27,6 +34,8 @@ UI tweaks include:
 - added more details to the ratio calculator panel
 - the detailed view is now a TextArea, which allows copying its contents
 - the detailed view has its values rounded to a certain amount of decimal places. 10 for ampere, 4 for outputs, 2 for all ratios and total resistances
+
+And last but not least as always I rewrote and reformatted a bunch of stuff to improve the overall quality of the application.
 
 ### (Previous) Update 1.0.3:
 This update features almost no visible changes. I've added a link to the GitHub repository and a detail view to the resistance ratio tool.
@@ -48,7 +57,8 @@ For the future it will be exceptionally easy to expand this application with mor
 ### Future goals:
 
 - better described inputs
-- SI scale units
+- autosort multiple number inputs
+- SI scale units (done for inputs, not yet for outputs)
 - options for number of calculations
 - rework ListPanels to be generic and move the detailed description methods to their originating classes
 - display the help image `res\ResCalcHelp.png`
