@@ -8,9 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
@@ -163,8 +161,12 @@ public class ResChainListPanel implements ChangeListener<ResistanceChain> {
             gc.setLineWidth(1);
             gc.strokeText(Calc.roundWithComma(chain.getVoltIn(), 2) + " V", pos[0] - 8, pos[1] - 20);
             gc.setLineWidth(2);
+        }
 
-            //lineOffset(gc, pos, 20);
+        if (chain.getAmpere() != 0) {
+            gc.setLineWidth(1);
+            gc.strokeText(Calc.roundWithComma(chain.getAmpere(), 10) + " A", pos[0] + 64, pos[1] - 32);
+            gc.setLineWidth(2);
         }
 
         double[] outputs = chain.getOutputs();

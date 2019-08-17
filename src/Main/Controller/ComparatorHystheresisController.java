@@ -9,6 +9,13 @@ import javafx.scene.control.*;
 
 import java.util.List;
 
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
+ */
 public class ComparatorHystheresisController {
 
     private CompHystListPanel compHystListPanel;

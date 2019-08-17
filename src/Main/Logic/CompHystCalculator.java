@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
+ */
 public class CompHystCalculator {
 
     public static List<CompHyst> calcCompHyst(double u1, double u2high, double uOutH, double uOutL, double ampere, int eSeries, int range) {

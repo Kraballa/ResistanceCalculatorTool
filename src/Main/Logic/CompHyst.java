@@ -1,5 +1,12 @@
 package Main.Logic;
 
+/*
+ * Project by Vinzent Brömauer
+ * vinz.corno@web.de
+ *
+ * This file is licensed under the GPL license Version 3.
+ * See https://www.gnu.org/licenses/ for the full license.
+ */
 public class CompHyst implements Comparable<CompHyst> {
 
     private double u1, u2high, uOutH, uOutL, uOutHD, uOutLD = 0;
@@ -55,7 +62,7 @@ public class CompHyst implements Comparable<CompHyst> {
 
     @Override
     public String toString() {
-        return "r1: " + resistances[0] + "Ω  r2: " + resistances[1] + "Ω  r3: " + resistances[2] + "Ω";
+        return "R1: " + resistances[0] + "Ω  R2: " + resistances[1] + "Ω  R3: " + resistances[2] + "Ω";
     }
 
     @Override
