@@ -1,6 +1,7 @@
 package Main.UI;
 
 import Main.Calc;
+import Main.Export.ExportToSpice;
 import Main.Logic.ResistanceChain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -61,6 +62,11 @@ public class ResChainListPanel implements ChangeListener<ResistanceChain> {
             @Override
             protected void updateItem(ResistanceChain item, boolean empty) {
                 super.updateItem(item, empty);
+
+                MenuItem exportItem = new MenuItem("Export");
+                exportItem.setOnAction(event -> ExportToSpice.exportResChain(item));
+                ContextMenu contextMenu = new ContextMenu(exportItem);
+                LeftPanel.setContextMenu(contextMenu);
 
                 if (empty || item == null) {
                     setText(null);
