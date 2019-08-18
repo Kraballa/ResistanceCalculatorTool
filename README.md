@@ -14,7 +14,7 @@ The third calculation technique determines 3 resistance values to get the desire
 The goal is to provide a tool that solves this and many other similar mathematical problems in electrical engineering.
 
 ## (Current) Update 1.1.1:
-- calculation results can now be exported as .asc files. Opening them in LTSpice, a freeware circuit simulation program, allows users to simulate them and validate the values.
+- calculation results can now be exported as .asc files. Currently comparator circuits with hystheresis are not supported but they will be added very soon. Opening them in LTSpice, a freeware circuit simulation program, allows users to simulate them and validate the values.
 It started out as a context menu but since those aren't always visible I've replaced them with a button below the detailed description.
 - added shortcuts to some menu options
 
