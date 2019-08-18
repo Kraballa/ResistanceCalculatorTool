@@ -6,9 +6,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class CompHystListPanel implements ChangeListener<CompHyst> {
@@ -46,6 +47,11 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
             protected void updateItem(CompHyst item, boolean empty) {
                 super.updateItem(item, empty);
 
+                //MenuItem exportItem = new MenuItem("Export");
+                //exportItem.setOnAction(event -> ExportToSpice.exportCompHyst(item));
+                //ContextMenu contextMenu = new ContextMenu(exportItem);
+                //LeftPanel.setContextMenu(contextMenu);
+
                 if (empty || item == null) {
                     setText(null);
                     setStyle(null);
@@ -73,17 +79,15 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
      * @param chain the chain that stores the information
      */
     protected void displayInfo(CompHyst chain) {
-        LinkedList<String> comparisons = new LinkedList<>();
+        StringBuilder comparisons = new StringBuilder();
         double highRatio = Calc.roundWithComma(100 * chain.getuOutH() / chain.getuOutHD(), 4);
         double lowRatio = Calc.roundWithComma(100 * chain.getuOutL() / chain.getuOutLD(), 4);
-        comparisons.add("desired high: " + chain.getuOutHD() + " V actual: " + Calc.roundWithComma(chain.getuOutH(), 6) + " V (" + highRatio + "%)");
-        comparisons.add("desired low: " + chain.getuOutLD() + " V actual: " + Calc.roundWithComma(chain.getuOutL(), 6) + " V (" + lowRatio + "%)");
-        comparisons.add("");
-        comparisons.add("current through voltage divider: " + chain.getAmps()[0]);
-        comparisons.add("");
-        comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 10));
+        comparisons.append("desired high: " + chain.getuOutHD() + " V actual: " + Calc.roundWithComma(chain.getuOutH(), 6) + " V (" + highRatio + "%)\n");
+        comparisons.append("desired low: " + chain.getuOutLD() + " V actual: " + Calc.roundWithComma(chain.getuOutL(), 6) + " V (" + lowRatio + "%)\n\n");
+        comparisons.append("current through voltage divider: " + Calc.roundWithComma(chain.getAmps()[0], 10) + "\n\n");
+        comparisons.append("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 10));
 
-        RightPanel.setText(String.join("\n", comparisons));
+        RightPanel.setText(comparisons.toString());
     }
 
     @Override
