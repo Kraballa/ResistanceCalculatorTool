@@ -39,6 +39,8 @@ public class ComparatorHystheresisController {
     TextField u2high;
     @FXML
     TextField amount;
+    @FXML
+    Button export;
 
     @FXML
     private void initialize() {
@@ -81,10 +83,13 @@ public class ComparatorHystheresisController {
         }
         List<CompHyst> compHysts = CompHystCalculator.calcCompHyst(u1V, u2highV, uOutHV, uOutLV, ampereV, eSeries, amountV);
         compHystListPanel.displayCompHyst(compHysts);
+        //export.setDisable(false);
     }
 
     public void OnExport() {
         CompHyst selected = compHystListPanel.getSelected();
-        ExportToSpice.exportCompHyst(selected);
+        if (selected != null) {
+            ExportToSpice.exportCompHyst(selected);
+        }
     }
 }

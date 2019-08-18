@@ -49,21 +49,21 @@
                     <Insets bottom="5.0" left="5.0" right="5.0"/>
                 </HBox.margin>
             </TextField>
-            <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-            </VBox.margin>
             <TextField fx:id="outputVoltages" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0"
                        prefWidth="335.0" promptText="desired output voltage" text="8 4 2" HBox.hgrow="ALWAYS">
                 <HBox.margin>
                     <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>
             </TextField>
-            <Button id="confirmOutput" minHeight="32.0" minWidth="-Infinity"
-                    onAction="#OnConfirmCalculate" prefHeight="32.0" prefWidth="128.0" text="Calculate">
+            <Button id="confirmOutput" minHeight="32.0" minWidth="-Infinity" onAction="#OnConfirmCalculate"
+                    prefHeight="32.0" prefWidth="128.0" text="Calculate">
                 <HBox.margin>
                     <Insets bottom="5.0" right="5.0"/>
                 </HBox.margin>
             </Button>
+            <VBox.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </VBox.margin>
         </HBox>
         <SplitPane dividerPositions="0.5948081264108352" focusTraversable="true" maxHeight="1.7976931348623157E308"
                    maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" VBox.vgrow="ALWAYS">
@@ -80,8 +80,8 @@
                               maxWidth="1.7976931348623157E308" wrapText="true" AnchorPane.bottomAnchor="0.0"
                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
                               VBox.vgrow="ALWAYS"/>
-                    <Button maxWidth="1.7976931348623157E308" onAction="#OnExport" text="Export as .asc"
-                            VBox.vgrow="ALWAYS">
+                    <Button fx:id="export" disable="true" maxWidth="1.7976931348623157E308" onAction="#OnExport"
+                            text="Export as .asc" VBox.vgrow="ALWAYS">
                         <VBox.margin>
                             <Insets top="5.0"/>
                         </VBox.margin>

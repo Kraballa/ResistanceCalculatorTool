@@ -36,6 +36,8 @@ public class ResistanceCalculationController {
     TextArea detailArea;
     @FXML
     Canvas canvas;
+    @FXML
+    Button export;
 
     @FXML
     public void initialize() {
@@ -77,10 +79,13 @@ public class ResistanceCalculationController {
             resistorChains.addAll(ResistanceCalculator.calcResistanceChains(voltIn, voltOut, ampere, eSeries));
         }
         resListPanel.DisplayResistorList(resistorChains);
+        export.setDisable(false);
     }
 
     public void OnExport() {
         ResistanceChain selected = resListPanel.getSelected();
-        ExportToSpice.exportResChain(selected);
+        if (selected != null) {
+            ExportToSpice.exportResChain(selected);
+        }
     }
 }

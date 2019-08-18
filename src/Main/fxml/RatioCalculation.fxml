@@ -70,7 +70,8 @@
                               maxWidth="1.7976931348623157E308" wrapText="true" AnchorPane.bottomAnchor="0.0"
                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
                               VBox.vgrow="ALWAYS"/>
-                    <Button maxWidth="1.7976931348623157E308" onAction="#OnExport" text="Export as .asc"
+                    <Button fx:id="export" disable="true" maxWidth="1.7976931348623157E308" onAction="#OnExport"
+                            text="Export as .asc"
                             VBox.vgrow="ALWAYS">
                         <VBox.margin>
                             <Insets top="5.0"/>

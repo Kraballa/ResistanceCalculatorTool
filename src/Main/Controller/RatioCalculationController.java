@@ -31,6 +31,8 @@ public class RatioCalculationController {
     ListView<ResistanceChain> chainList;
     @FXML
     TextArea detailArea;
+    @FXML
+    Button export;
 
     @FXML
     public void initialize() {
@@ -64,10 +66,14 @@ public class RatioCalculationController {
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
         resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, eSeries));
         resListPanel.DisplayResistorList(resistorChains);
+
+        export.setDisable(false);
     }
 
     public void OnExport() {
         ResistanceChain selected = resListPanel.getSelected();
-        ExportToSpice.exportResChain(selected);
+        if (selected != null) {
+            ExportToSpice.exportResChain(selected);
+        }
     }
 }
