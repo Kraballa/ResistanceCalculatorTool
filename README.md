@@ -13,7 +13,12 @@ Another function lets you calculate two resistors based on a ratio and a total r
 The third calculation technique determines 3 resistance values to get the desired thresholds on an inverted comparator with hystheresis.
 The goal is to provide a tool that solves this and many other similar mathematical problems in electrical engineering.
 
-## (Current) Update 1.1:
+## (Current) Update 1.1.1:
+- calculation results can now be exported as .asc files. Opening them in LTSpice allows users to simulate them and validate the values.
+Due to difficulties with the way I separated the UI this feature is currently not available as a handy MenuItem, you'll have to right click the list entry 
+- added shortcuts to some menu options
+
+### (Previous) Update 1.1:
 New Update. The big part is a new type of calculation that deals with inverted comparators with hystheresis. The calculation process is long and sort of expensive.
 After an initial approximation values around those guesses are selected, in 3 dimensions. In the UI the TextArea titled "amount" corresponds to the amount of values that are picked for each dimension,
 meaning if it's set too high it will just take minutes and finally crash. With the tested inputs there were no improvements of the answers after 80 and past 100 the calculation took way too long (100^3 = 1.000.000 times a bunch of maths).

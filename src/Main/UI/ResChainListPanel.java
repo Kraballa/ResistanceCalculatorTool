@@ -12,7 +12,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -99,7 +98,7 @@ public class ResChainListPanel implements ChangeListener<ResistanceChain> {
      * @param chain the chain that stores the information
      */
     protected void displayInfo(ResistanceChain chain) {
-        LinkedList<String> comparisons = new LinkedList<>();
+        StringBuilder comparisons = new StringBuilder();
 
         double totalRes = Calc.roundWithComma(Calc.sumup(chain.getResistances()), 2);
         String totalResText = "total resistance:  " + totalRes + " Ω";
@@ -107,44 +106,43 @@ public class ResChainListPanel implements ChangeListener<ResistanceChain> {
             double optimalTotalRes = chain.getVoltIn() / chain.getAmpere();
             double ratio = Calc.roundWithComma(100 * totalRes / optimalTotalRes, 4);
             optimalTotalRes = Calc.roundWithComma(optimalTotalRes, 2);
-            comparisons.add("total desired resistance: " + optimalTotalRes + " Ω");
+            comparisons.append("total desired resistance: " + optimalTotalRes + " Ω\n");
             totalResText += " (" + ratio + "%)";
         }
-        comparisons.add(totalResText);
+        totalResText += "\n";
+        comparisons.append(totalResText);
 
         if (chain.getAmpere() != 0 && chain.getVoltIn() != 0) {
-            comparisons.add("optimal ampere: " + Calc.roundWithComma(chain.getAmpere(), 10) + " A");
-            comparisons.add("");
+            comparisons.append("optimal ampere: " + Calc.roundWithComma(chain.getAmpere(), 10) + " A\n\n");
 
             for (int i = 0; i < chain.getOptimalOutputs().length; i++) {
                 double optOutput = Calc.roundWithComma(chain.getOptimalOutputs()[i], 4);
                 double actOutput = Calc.roundWithComma(chain.getOutputs()[i], 4);
                 double ratio = Calc.roundWithComma(100 * optOutput / actOutput, 2);
-                comparisons.add("desired: " + optOutput +
+                comparisons.append("desired: " + optOutput +
                         " V, actual: " + actOutput
-                        + " V (" + ratio + "%)");
+                        + " V (" + ratio + "%)\n");
             }
-            comparisons.add("");
         } else {
             double[] resistances = chain.getResistances();
             double ratio = resistances[0] / resistances[1] / chain.getRatio();
-            String ratioText = "actual ratio: " + Calc.roundWithComma(ratio * 100, 2) + "%";
-            comparisons.add(ratioText);
+            String ratioText = "actual ratio: " + Calc.roundWithComma(ratio * 100, 2) + "%\n";
+            comparisons.append(ratioText);
         }
-
+        comparisons.append("\n");
         if (chain.getDeviation() >= 0.5) {
-            comparisons.add("Warning! extreme deviation");
+            comparisons.append("Warning! extreme deviation\n");
             RightPanel.setStyle(warningStyle);
         } else if (chain.getDeviation() >= 0.08) {
-            comparisons.add("suboptimal deviation");
+            comparisons.append("suboptimal deviation\n");
             RightPanel.setStyle(suboptimalStyle);
         } else {
             RightPanel.setStyle(defaultStyle);
         }
 
-        comparisons.add("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 6));
+        comparisons.append("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 6) + "\n");
 
-        RightPanel.setText(String.join("\n", comparisons));
+        RightPanel.setText(comparisons.toString());
     }
 
     /**

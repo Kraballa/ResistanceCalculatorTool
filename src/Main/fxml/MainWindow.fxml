@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane prefHeight="710.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller.MainWindowController">
     <top>
         <MenuBar>
             <Menu text="_New">
-                <MenuItem onAction="#OnAddResCalc" text="Resistance _Chain Calculator"/>
-                <MenuItem onAction="#OnAddRatioCalc" text="Resistance _Ratio Calculator"/>
-                <MenuItem onAction="#OnAddCompHyst" text="C_omparator Hystheresis Calculator"/>
+                <MenuItem onAction="#OnAddResCalc" text="Resistance _Chain Calculator">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT1" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem onAction="#OnAddRatioCalc" text="Resistance _Ratio Calculator">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT2" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem onAction="#OnAddCompHyst" text="C_omparator Hystheresis Calculator">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT3" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
             </Menu>
             <Menu text="_Help">
                 <MenuItem onAction="#OnViewGitHubRepo" text="View _GitHub Repo"/>
-                <MenuItem onAction="#OnOpenAbout" text="_About"/>
+                <MenuItem onAction="#OnOpenAbout" text="_About">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
             </Menu>
         </MenuBar>
     </top>
