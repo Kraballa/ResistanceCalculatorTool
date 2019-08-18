@@ -30,8 +30,13 @@ public abstract class InputCheck {
         }
     }
 
-    public static double parseDoubleGreaterZero(String value) throws NumberFormatException, IllegalFormatException {
+    public static double parseDoubleGreaterZero(String value) throws NumberFormatException, IllegalArgumentException {
         value = value.trim();
+
+        if (value.equals("")) {
+            throw new IllegalArgumentException("value cannot be empty");
+        }
+
         double multiplier = getMultiplier(value.charAt(value.length() - 1));
         if (multiplier != 1) {
             value = value.substring(0, value.length() - 1);
