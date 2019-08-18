@@ -1,5 +1,6 @@
 package Main.Controller;
 
+import Main.Export.ExportToSpice;
 import Main.InputCheck;
 import Main.Logic.ResistanceCalculator;
 import Main.Logic.ResistanceChain;
@@ -63,5 +64,10 @@ public class RatioCalculationController {
         ObservableList<ResistanceChain> resistorChains = FXCollections.observableArrayList();
         resistorChains.addAll(ResistanceCalculator.calcChainsFromRatio(parsedRatio, resistBorder, eSeries));
         resListPanel.DisplayResistorList(resistorChains);
+    }
+
+    public void OnExport() {
+        ResistanceChain selected = resListPanel.getSelected();
+        ExportToSpice.exportResChain(selected);
     }
 }

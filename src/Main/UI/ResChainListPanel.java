@@ -1,7 +1,6 @@
 package Main.UI;
 
 import Main.Calc;
-import Main.Export.ExportToSpice;
 import Main.Logic.ResistanceChain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
 import java.util.List;
@@ -62,11 +63,6 @@ public class ResChainListPanel implements ChangeListener<ResistanceChain> {
             protected void updateItem(ResistanceChain item, boolean empty) {
                 super.updateItem(item, empty);
 
-                MenuItem exportItem = new MenuItem("Export");
-                exportItem.setOnAction(event -> ExportToSpice.exportResChain(item));
-                ContextMenu contextMenu = new ContextMenu(exportItem);
-                LeftPanel.setContextMenu(contextMenu);
-
                 if (empty || item == null) {
                     setText(null);
                     setStyle(null);
@@ -89,6 +85,10 @@ public class ResChainListPanel implements ChangeListener<ResistanceChain> {
 
         LeftPanel.getSelectionModel().selectedItemProperty().addListener(this);
         LeftPanel.getSelectionModel().selectFirst();
+    }
+
+    public ResistanceChain getSelected() {
+        return LeftPanel.getSelectionModel().getSelectedItem();
     }
 
     /**

@@ -1,5 +1,6 @@
 package Main.Controller;
 
+import Main.Export.ExportToSpice;
 import Main.InputCheck;
 import Main.Logic.CompHyst;
 import Main.Logic.CompHystCalculator;
@@ -80,5 +81,10 @@ public class ComparatorHystheresisController {
         }
         List<CompHyst> compHysts = CompHystCalculator.calcCompHyst(u1V, u2highV, uOutHV, uOutLV, ampereV, eSeries, amountV);
         compHystListPanel.displayCompHyst(compHysts);
+    }
+
+    public void OnExport() {
+        CompHyst selected = compHystListPanel.getSelected();
+        ExportToSpice.exportCompHyst(selected);
     }
 }

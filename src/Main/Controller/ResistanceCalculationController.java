@@ -1,5 +1,6 @@
 package Main.Controller;
 
+import Main.Export.ExportToSpice;
 import Main.InputCheck;
 import Main.Logic.ResistanceCalculator;
 import Main.Logic.ResistanceChain;
@@ -76,5 +77,10 @@ public class ResistanceCalculationController {
             resistorChains.addAll(ResistanceCalculator.calcResistanceChains(voltIn, voltOut, ampere, eSeries));
         }
         resListPanel.DisplayResistorList(resistorChains);
+    }
+
+    public void OnExport() {
+        ResistanceChain selected = resListPanel.getSelected();
+        ExportToSpice.exportResChain(selected);
     }
 }

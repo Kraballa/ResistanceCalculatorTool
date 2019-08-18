@@ -73,10 +73,20 @@
                           AnchorPane.topAnchor="0.0"/>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0">
-                <TextArea fx:id="detailArea" editable="false" wrapText="true" maxHeight="1.7976931348623157E308"
-                          maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
-                          prefHeight="292.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="292.0"
+                      prefWidth="298.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <TextArea fx:id="detailArea" editable="false" maxHeight="1.7976931348623157E308"
+                              maxWidth="1.7976931348623157E308" wrapText="true" AnchorPane.bottomAnchor="0.0"
+                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                              VBox.vgrow="ALWAYS"/>
+                    <Button maxWidth="1.7976931348623157E308" onAction="#OnExport" text="Export as .asc"
+                            VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets top="5.0"/>
+                        </VBox.margin>
+                    </Button>
+                </VBox>
             </AnchorPane>
         </SplitPane>
         <Canvas fx:id="canvas" height="100.0" width="1000" VBox.vgrow="ALWAYS">

@@ -47,11 +47,6 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
             protected void updateItem(CompHyst item, boolean empty) {
                 super.updateItem(item, empty);
 
-                //MenuItem exportItem = new MenuItem("Export");
-                //exportItem.setOnAction(event -> ExportToSpice.exportCompHyst(item));
-                //ContextMenu contextMenu = new ContextMenu(exportItem);
-                //LeftPanel.setContextMenu(contextMenu);
-
                 if (empty || item == null) {
                     setText(null);
                     setStyle(null);
@@ -70,6 +65,10 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
 
         LeftPanel.getSelectionModel().selectedItemProperty().addListener(this);
         LeftPanel.getSelectionModel().selectFirst();
+    }
+
+    public CompHyst getSelected() {
+        return LeftPanel.getSelectionModel().getSelectedItem();
     }
 
     /**

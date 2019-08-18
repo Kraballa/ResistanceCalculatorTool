@@ -20,12 +20,12 @@ public abstract class ExportToSpice {
 
     public static void exportResChain(ResistanceChain chain) {
         String fileData = buildResChainString(chain);
-        saveFile(fileData);
+        saveFile(fileData, "resistance_chain.asc");
     }
 
     public static void exportCompHyst(CompHyst circuit) {
         String fileData = buildComparatorString(circuit);
-        saveFile(fileData);
+        saveFile(fileData, "comparator_hystheresis.asc");
     }
 
     private static String buildResChainString(ResistanceChain chain) {
@@ -79,12 +79,12 @@ public abstract class ExportToSpice {
         return fileData.toString();
     }
 
-    private static void saveFile(String fileContent) {
+    private static void saveFile(String fileContent, String fileName) {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter spiceFilter = new FileChooser.ExtensionFilter("LTSpice Circuit", ".asc");
         fileChooser.getExtensionFilters().add(spiceFilter);
         fileChooser.selectedExtensionFilterProperty().setValue(spiceFilter);
-        fileChooser.setInitialFileName("resistance_chain.asc");
+        fileChooser.setInitialFileName(fileName);
         fileChooser.setTitle("Save As");
         File selectedDirectory = fileChooser.showSaveDialog(new Stage());
 
