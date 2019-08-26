@@ -9,7 +9,7 @@ package Main.Logic;
  */
 public class CompHyst implements Comparable<CompHyst> {
 
-    private double u1, u2high, uOutH, uOutL, uOutHD, uOutLD = 0;
+    private double u1, u2high, uOutH, uOutL, uOutHDesired, uOutLDesired = 0;
     private double[] amps;
     private double[] resistances;
     private double deviation;
@@ -28,8 +28,8 @@ public class CompHyst implements Comparable<CompHyst> {
     public void setHighLow(double high, double low, double desiredH, double desiredL) {
         uOutH = high;
         uOutL = low;
-        uOutHD = desiredH;
-        uOutLD = desiredL;
+        uOutHDesired = desiredH;
+        uOutLDesired = desiredL;
     }
 
     public double getuOutH() {
@@ -40,12 +40,12 @@ public class CompHyst implements Comparable<CompHyst> {
         return uOutL;
     }
 
-    public double getuOutHD() {
-        return uOutHD;
+    public double getuOutHDesired() {
+        return uOutHDesired;
     }
 
-    public double getuOutLD() {
-        return uOutLD;
+    public double getuOutLDesired() {
+        return uOutLDesired;
     }
 
     public double getDeviation() {
@@ -58,6 +58,14 @@ public class CompHyst implements Comparable<CompHyst> {
 
     public double[] getAmps() {
         return amps;
+    }
+
+    public double getU1() {
+        return u1;
+    }
+
+    public double getU2high() {
+        return u2high;
     }
 
     @Override

@@ -79,10 +79,10 @@ public class CompHystListPanel implements ChangeListener<CompHyst> {
      */
     protected void displayInfo(CompHyst chain) {
         StringBuilder comparisons = new StringBuilder();
-        double highRatio = Calc.roundWithComma(100 * chain.getuOutH() / chain.getuOutHD(), 4);
-        double lowRatio = Calc.roundWithComma(100 * chain.getuOutL() / chain.getuOutLD(), 4);
-        comparisons.append("desired high: " + chain.getuOutHD() + " V actual: " + Calc.roundWithComma(chain.getuOutH(), 6) + " V (" + highRatio + "%)\n");
-        comparisons.append("desired low: " + chain.getuOutLD() + " V actual: " + Calc.roundWithComma(chain.getuOutL(), 6) + " V (" + lowRatio + "%)\n\n");
+        double highRatio = Calc.roundWithComma(100 * chain.getuOutH() / chain.getuOutHDesired(), 4);
+        double lowRatio = Calc.roundWithComma(100 * chain.getuOutL() / chain.getuOutLDesired(), 4);
+        comparisons.append("desired high: " + chain.getuOutHDesired() + " V actual: " + Calc.roundWithComma(chain.getuOutH(), 6) + " V (" + highRatio + "%)\n");
+        comparisons.append("desired low: " + chain.getuOutLDesired() + " V actual: " + Calc.roundWithComma(chain.getuOutL(), 6) + " V (" + lowRatio + "%)\n\n");
         comparisons.append("current through voltage divider: " + Calc.roundWithComma(chain.getAmps()[0], 10) + "\n\n");
         comparisons.append("deviation coefficient: " + Calc.roundWithComma(chain.getDeviation(), 10));
 

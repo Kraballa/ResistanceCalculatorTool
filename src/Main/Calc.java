@@ -146,7 +146,7 @@ public abstract class Calc {
             resistances[i] = roundWithComma(series[index] * decade, 1);
         }
 
-        return resistances;
+        return trim(resistances);
     }
 
     private static double[] getESeries(int series) {
@@ -193,5 +193,27 @@ public abstract class Calc {
             decade++;
         }
         return new Pair<>(best, decade);
+    }
+
+    private static double[] trim(double[] numbers) {
+
+        int i = 0;
+        int j = numbers.length;
+
+        while (i < j) {
+            if (Math.abs(numbers[i] - numbers[i + 1]) < 0.1) {
+                i++;
+            } else if (Math.abs(numbers[j - 1] - numbers[j - 2]) < 0.1) {
+                j--;
+            } else {
+                break;
+            }
+        }
+        System.out.println("i: " + i + "  j: " + j);
+        double[] trimmed = new double[j - i];
+        for (int startIndex = -i; i < j; i++) {
+            trimmed[startIndex + i] = numbers[i];
+        }
+        return trimmed;
     }
 }

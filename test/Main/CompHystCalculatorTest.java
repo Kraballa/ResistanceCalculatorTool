@@ -11,7 +11,7 @@ class CompHystCalculatorTest {
     @Test
     void testMatrixCalc() {
         double[] res = CompHystCalculator.solveForAmpere(1000, 200, 50000, 10, 10);
-        System.out.println("res: " + res[0] + " " + res[1] + " " + res[2]);
+        System.out.println("res: " + Arrays.toString(res));
         System.out.println("line1: " + Calc.roundWithComma(-10 + res[0] * 1000 + res[1] * 200, 6));
         System.out.println("line2: " + Calc.roundWithComma(-10 + res[2] * 50000 + res[1] * 200, 6));
         System.out.println("line3: " + Calc.roundWithComma(-res[0] + res[1] - res[2], 6));

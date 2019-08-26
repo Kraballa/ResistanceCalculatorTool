@@ -3,6 +3,7 @@ package Main.Logic;
 import Main.Calc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class CompHystCalculator {
         //Step 1.3: calculate r3
         double[] res = new double[]{resChain.getResistances()[0], resChain.getResistances()[1], 0};
         res[2] = (res[0] * (u1 - windowAvg)) / windowSize;
+        System.out.println("-----------------------");
+        System.out.println("initial estimate: " + Arrays.toString(res));
 
         //STEP 2: extrapolate calculated values
         List<CompHyst> circuits = new ArrayList<>();
@@ -59,6 +62,7 @@ public class CompHystCalculator {
             }
         }
         Collections.sort(circuits);
+        System.out.println("actual best: " + Arrays.toString(circuits.iterator().next().getResistances()));
         return new ArrayList<>(circuits.subList(0, Math.min(30, circuits.size())));
     }
 

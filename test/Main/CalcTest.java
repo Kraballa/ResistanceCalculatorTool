@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalcTest {
@@ -71,10 +73,7 @@ class CalcTest {
 
     @Test
     void getResAroundTest() {
-        StringBuilder s = new StringBuilder();
-        for (double cur : Calc.getResistancesAround(1500, 96, 100)) {
-            s.append(Calc.roundWithComma(cur, 2)).append("_");
-        }
-        System.out.println(s);
+        double[] resistances = Calc.getResistancesAround(1500, 3, 100);
+        System.out.println("length: " + resistances.length + " | " + Arrays.toString(resistances));
     }
 }
